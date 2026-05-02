@@ -1,0 +1,24 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+*.suo
+*.user
+
+# Node
+node_modules/
+.cache/
+
+# Archivos de desarrollo / referencia — no van a producción
+checks/
+uploads/
+
+# Fuentes duplicadas (ya están en /fonts/)
+fonts/tabler/
+
+# Temporales
+*.tmp
+*.bak

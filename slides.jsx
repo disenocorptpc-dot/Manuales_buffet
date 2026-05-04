@@ -218,8 +218,6 @@ function MenuHeaderSlide({ slide, lang }) {
   const second = rest.join(" ") || "";
   return (
     <div className="slide menu-header-slide surface-paper">
-      <div className="grain" />
-      <div className="menu-header-rings"><RingsConcentric count={14} base={220} step={20} /></div>
       <div className="menu-header-content">
         <div className="menu-header-side">{first}</div>
         <div className="menu-photo-circle" style={{ backgroundImage: `url(${m.hero})` }} />
@@ -238,11 +236,6 @@ function MenuDetailSlide({ slide, lang }) {
   const second = rest.join(" ") || "";
   return (
     <div className="slide menu-detail-slide surface-paper">
-      <div className="grain" />
-      <div className="menu-detail-rings">
-        <RingsConcentric cx={480} cy={540} count={14} base={200} step={18} />
-      </div>
-
       <div className="menu-detail-content">
         <div className="menu-detail-photo-wrap">
           <div className="menu-detail-photo" style={{ backgroundImage: `url(${m.hero})` }} />

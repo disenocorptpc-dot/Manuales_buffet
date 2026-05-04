@@ -181,7 +181,6 @@ function SelectorSlide({ slide, lang, onPickMenu }) {
   const tagline = ui[slide.taglineKey];
   return (
     <div className="slide selector-slide surface-paper">
-      <div className="selector-rings"><RingsCorner /></div>
       <div className="selector-content">
         <header className="selector-header">
           <h2 className="selector-title">Set Menus</h2>

@@ -392,29 +392,33 @@ button {
   margin: 0;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(32px, 4.2vw, 58px);
+  font-size: clamp(36px, 5.2vw, 68px);
   letter-spacing: 0.32em;
   color: var(--buffet-bronze);
   text-transform: uppercase;
+  line-height: 1;
 }
 .selector-sub {
+  /* L2: title ÷ 1.618 */
   font-family: var(--sans);
-  font-size: 10px;
-  letter-spacing: 0.48em;
-  font-weight: 500;
+  font-size: clamp(16px, 2.4vw, 30px);
+  letter-spacing: 0.38em;
+  font-weight: 700;
   text-transform: uppercase;
   color: var(--buffet-ink);
-  opacity: 0.65;
+  opacity: 0.72;
+  margin-top: 6px;
 }
 .selector-tagline {
-  margin: 4px 0 0;
-  max-width: 520px;
+  /* L3: subtitle ÷ 1.618 */
+  margin: 10px 0 0;
+  max-width: 560px;
   font-family: var(--serif);
   font-style: italic;
-  font-size: 16px;
+  font-size: clamp(14px, 1.6vw, 21px);
   color: var(--buffet-ink-soft);
-  letter-spacing: 0.02em;
-  line-height: 1.6;
+  letter-spacing: 0.03em;
+  line-height: 1.65;
 }
 
 /* ── Panoramic pill ── */
@@ -462,16 +466,22 @@ button {
   background: linear-gradient(160deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.65) 100%);
 }
 .menu-pill-label {
+  /* L4: tagline ÷ 1.618 — centered to avoid pill border-radius clipping */
   position: absolute;
-  bottom: clamp(14px, 2.8vh, 26px);
-  left: clamp(18px, 4%, 32px);
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18%; /* keep text away from the extreme rounded corners */
   font-family: var(--sans);
-  font-size: clamp(8px, 0.85vw, 11px);
+  font-size: clamp(10px, 1.1vw, 14px);
   letter-spacing: 0.42em;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   color: #fff;
-  text-shadow: 0 1px 10px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 14px rgba(0,0,0,0.7);
+  text-align: center;
+  line-height: 1.5;
 }
 
 /* ═══════════════════════════════════════════════════════════════

@@ -216,7 +216,7 @@ window.DECK_CONTENT = {
       overline: { es: "Set Menus", en: "Set Menus" },
       heading:  { es: "Elige 1 opción", en: "Choose 1 option" },
       taglineKey: "setMenusTagline",
-      options: ["mexican-morning", "classic-american", "continental"],
+      options: ["mexican-morning", "classic-american"],
     },
     { id: "menu-mexican-morning",  type: "menuHeader", menuId: "mexican-morning" },
     { id: "menu-mexican-morning-detail", type: "menuDetail", menuId: "mexican-morning" },

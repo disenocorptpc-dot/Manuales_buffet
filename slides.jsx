@@ -14,7 +14,6 @@ const t = (val, lang) => {
 
 // Selector "stadium" rings — elongated pill arcs nested, rotated/offset
 function RingsStadium() {
-  // Stadium = pill shape; we draw ~6 concentric stadium outlines.
   const cx = 960, cy = 540;
   const baseRx = 720, baseRy = 200;
   const step = 24;
@@ -32,6 +31,28 @@ function RingsStadium() {
             ry={baseRy + i * step}
           />
         ))}
+      </g>
+    </svg>
+  );
+}
+
+// Asymmetric corner rings — top-right + bottom-left partial stadium arcs
+function RingsCorner() {
+  const count = 7;
+  const step = 32;
+  return (
+    <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet">
+      <g fill="none" stroke="#3a382b" strokeWidth="1" strokeOpacity="0.35">
+        {Array.from({ length: count }).map((_, i) => {
+          const rx = 520 + i * step;
+          const ry = 200 + i * step;
+          return (
+            <g key={i}>
+              <rect x={1860 - rx} y={-80 - ry} width={rx * 2} height={ry * 2} rx={ry} ry={ry} />
+              <rect x={60 - rx}   y={1160 - ry} width={rx * 2} height={ry * 2} rx={ry} ry={ry} />
+            </g>
+          );
+        })}
       </g>
     </svg>
   );
@@ -154,34 +175,32 @@ function SectionSlide({ slide, lang, onGoToSelector }) {
   );
 }
 
-// ── Slide: Selector (stadium-shape cards) ─────────────────────
+// ── Slide: Selector (panoramic pill) ─────────────────────────
 function SelectorSlide({ slide, lang, onPickMenu }) {
   const { menus, ui } = window.DECK_CONTENT;
   const tagline = ui[slide.taglineKey];
   return (
     <div className="slide selector-slide surface-paper">
-      <div className="grain" />
-      <div className="selector-rings"><RingsStadium /></div>
+      <div className="selector-rings"><RingsCorner /></div>
       <div className="selector-content">
         <header className="selector-header">
           <h2 className="selector-title">Set Menus</h2>
           <div className="selector-sub">Choose 1 option</div>
           <p className="selector-tagline">{t(tagline, lang)}</p>
         </header>
-
-        <div className="selector-cards">
+        <div className="selector-panorama-pill">
           {slide.options.map((menuId) => {
             const m = menus[menuId];
             return (
               <button
                 key={menuId}
-                className="menu-card"
+                className="menu-pill-section"
                 onClick={() => onPickMenu(menuId)}
                 aria-label={t(m.title, lang)}
               >
-                <div className="menu-card-image" style={{ backgroundImage: `url(${m.hero})` }} />
-                <div className="menu-card-overlay" />
-                <div className="menu-card-label">{t(m.title, lang)}</div>
+                <div className="menu-pill-image" style={{ backgroundImage: `url(${m.hero})` }} />
+                <div className="menu-pill-overlay" />
+                <span className="menu-pill-label">{t(m.title, lang)}</span>
               </button>
             );
           })}

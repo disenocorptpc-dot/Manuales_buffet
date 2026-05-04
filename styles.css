@@ -352,21 +352,24 @@ button {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   SELECTOR SLIDE (paper bg, stadium-shape image cards)
+   SELECTOR SLIDE — panoramic pill, textured background
    ═══════════════════════════════════════════════════════════════ */
 .selector-slide {
-  background: var(--buffet-paper);
+  background-color: var(--buffet-paper);
+  background-image: url('_recursos/imagenes/03_Fondo_beige.jpg');
+  background-size: cover;
+  background-position: center;
 }
 .selector-rings {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  overflow: hidden; /* clips the corner arcs to slide bounds */
 }
 .selector-rings svg {
   width: 100%; height: 100%;
   display: block;
-  opacity: 0.45;
 }
 .selector-content {
   position: absolute; inset: 0;
@@ -374,12 +377,12 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0;
+  gap: 36px;
   z-index: 2;
+  padding: 0 5vw;
 }
 .selector-header {
   text-align: center;
-  padding: 0 0 40px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -389,7 +392,7 @@ button {
   margin: 0;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(36px, 4.4vw, 60px);
+  font-size: clamp(32px, 4.2vw, 58px);
   letter-spacing: 0.32em;
   color: var(--buffet-bronze);
   text-transform: uppercase;
@@ -401,66 +404,74 @@ button {
   font-weight: 500;
   text-transform: uppercase;
   color: var(--buffet-ink);
-  opacity: 0.6;
+  opacity: 0.65;
 }
 .selector-tagline {
-  margin: 6px 0 0;
-  max-width: 560px;
+  margin: 4px 0 0;
+  max-width: 520px;
   font-family: var(--serif);
   font-style: italic;
-  font-size: 17px;
+  font-size: 16px;
   color: var(--buffet-ink-soft);
   letter-spacing: 0.02em;
   line-height: 1.6;
 }
 
-.selector-cards {
+/* ── Panoramic pill ── */
+.selector-panorama-pill {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 28px;
-  width: 100%;
-  padding: 0 8vw;
-  flex-wrap: wrap;
-}
-.menu-card {
-  position: relative;
-  width: clamp(220px, 22vw, 320px);
-  height: clamp(160px, 18vw, 240px);
+  width: clamp(460px, 78%, 1080px);
+  height: clamp(170px, 34vh, 320px);
   border-radius: 9999px;
   overflow: hidden;
-  border: 0;
-  cursor: pointer;
-  background: var(--buffet-paper-deep);
-  transition: transform 350ms cubic-bezier(0.2, 0, 0, 1), box-shadow 350ms ease;
-  box-shadow: 0 8px 28px -12px rgba(0,0,0,0.25);
+  box-shadow: 0 24px 60px -20px rgba(0,0,0,0.35),
+              0 8px 20px -8px rgba(0,0,0,0.18);
 }
-.menu-card:hover { transform: translateY(-2px) scale(1.015); box-shadow: 0 16px 40px -16px rgba(0,0,0,0.35); }
-.menu-card-image {
-  position: absolute; inset: 0;
+.menu-pill-section {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  background: var(--buffet-paper-deep);
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  transition: flex 380ms cubic-bezier(0.2, 0, 0, 1);
+}
+.menu-pill-section:hover { flex: 1.22; }
+.menu-pill-section + .menu-pill-section {
+  border-left: 1px solid rgba(255,255,255,0.22);
+}
+.menu-pill-image {
+  position: absolute;
+  inset: -8%;
   background-size: cover;
   background-position: center;
-  filter: saturate(0.9) brightness(0.9);
+  filter: saturate(0.88) brightness(0.88);
+  transition: transform 380ms cubic-bezier(0.2, 0, 0, 1), filter 380ms ease;
 }
-.menu-card-overlay {
+.menu-pill-section:hover .menu-pill-image {
+  transform: scale(1.05);
+  filter: saturate(1) brightness(0.82);
+}
+.menu-pill-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.42) 100%);
+  background: linear-gradient(160deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 100%);
+  transition: background 380ms ease;
 }
-.menu-card-label {
+.menu-pill-section:hover .menu-pill-overlay {
+  background: linear-gradient(160deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.65) 100%);
+}
+.menu-pill-label {
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  bottom: clamp(14px, 2.8vh, 26px);
+  left: clamp(18px, 4%, 32px);
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: clamp(8px, 0.85vw, 11px);
   letter-spacing: 0.42em;
   font-weight: 500;
   text-transform: uppercase;
   color: #fff;
-  text-shadow: 0 1px 12px rgba(0,0,0,0.5);
-  padding: 0 24px;
-  text-align: center;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.6);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -691,9 +702,26 @@ button {
 }
 
 /* ───────── Responsive trims ───────── */
+
+/* iPad landscape (1024–1180px) */
+@media (max-width: 1180px) {
+  .selector-panorama-pill {
+    width: 88%;
+    height: clamp(155px, 30vh, 270px);
+  }
+  .selector-title { font-size: clamp(28px, 3.6vw, 46px); }
+  .selector-content { gap: 28px; }
+}
+
+/* iPad / tablet general */
 @media (max-width: 900px) {
   .chrome { padding: 16px 18px; }
-  .selector-cards { padding: 0 24px 60px; gap: 16px; }
+  .selector-content { gap: 22px; padding: 0 20px; }
+  .selector-panorama-pill {
+    width: 92%;
+    height: clamp(140px, 28vh, 240px);
+  }
+  .selector-tagline { font-size: 14px; }
   .menu-detail-content {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -704,6 +732,22 @@ button {
   .menu-header-side { font-size: 16px; }
   .dots { display: none; }
   .section-content { gap: 60px; }
+}
+
+/* Portrait tablet / mobile — pill stacks vertically */
+@media (max-width: 768px) {
+  .selector-content { gap: 20px; padding: 80px 20px; }
+  .selector-panorama-pill {
+    flex-direction: column;
+    border-radius: 28px;
+    width: 88%;
+    height: 52vh;
+  }
+  .menu-pill-section + .menu-pill-section {
+    border-left: none;
+    border-top: 1px solid rgba(255,255,255,0.22);
+  }
+  .menu-pill-label { bottom: 14px; left: 18px; }
 }
 
 /* ── CMS "EDITOR" button in top chrome ─────────────────────── */

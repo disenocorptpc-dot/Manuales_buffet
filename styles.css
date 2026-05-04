@@ -505,15 +505,15 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(40px, 5vw, 80px);
+  gap: clamp(24px, 3.5vw, 60px);
   z-index: 2;
-  padding: 0 8vw;
+  padding: 0 6vw;
 }
 .menu-header-side {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: var(--type-l1);
-  letter-spacing: 0.36em;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(16px, 1.8vw, 24px);
+  letter-spacing: 0.38em;
   text-transform: uppercase;
   color: var(--buffet-bronze);
   white-space: nowrap;
@@ -521,18 +521,20 @@ button {
   text-align: center;
 }
 .menu-header-side.is-soft {
+  font-weight: 300;
   color: var(--buffet-ink-soft);
 }
 
 .menu-photo-circle {
-  width: clamp(280px, 36vw, 520px);
-  height: clamp(280px, 36vw, 520px);
+  width: clamp(220px, 32vw, 480px);
+  height: clamp(220px, 32vw, 480px);
   border-radius: 50%;
   overflow: hidden;
   background-size: cover;
   background-position: center;
   box-shadow: 0 12px 36px -12px rgba(0,0,0,0.35);
   position: relative;
+  flex-shrink: 0; /* prevent circle from collapsing on iPad */
 }
 .menu-photo-circle::after {
   content: "";
@@ -586,17 +588,18 @@ button {
 }
 .menu-detail-title {
   margin: 0 0 4px;
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-weight: 400;
-  font-size: var(--type-l1);
-  letter-spacing: 0.28em;
+  font-size: clamp(16px, 1.8vw, 24px);
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  line-height: 1.2;
+  line-height: 1.25;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--buffet-line);
+  white-space: nowrap;
 }
-.menu-detail-title .first { color: var(--buffet-bronze); }
-.menu-detail-title .second { color: var(--buffet-ink-soft); }
+.menu-detail-title .first { color: var(--buffet-bronze); font-weight: 700; }
+.menu-detail-title .second { color: var(--buffet-ink-soft); font-weight: 300; }
 
 .menu-categories {
   display: flex;
@@ -728,7 +731,7 @@ button {
   .selector-content { gap: 28px; }
 }
 
-/* iPad / tablet general */
+/* iPad / tablet general — keep 2-col for menu-detail, only layout adjustments */
 @media (max-width: 900px) {
   .chrome { padding: 16px 18px; }
   .selector-content { gap: 22px; padding: 0 20px; }
@@ -738,15 +741,23 @@ button {
   }
   .selector-tagline { font-size: 14px; }
   .menu-detail-content {
+    gap: 20px;
+    padding: 80px 4vw 60px;
+  }
+  .dots { display: none; }
+  .section-content { gap: 60px; }
+}
+
+/* Portrait tablet — stack columns */
+@media (max-width: 768px) {
+  .menu-detail-content {
     grid-template-columns: 1fr;
     gap: 32px;
     padding: 100px 24px 60px;
   }
   .menu-detail-text { max-width: none; align-items: center; text-align: center; }
   .menu-categories { width: 100%; max-width: 480px; }
-  .menu-header-side { font-size: 16px; }
-  .dots { display: none; }
-  .section-content { gap: 60px; }
+  .menu-detail-title { white-space: normal; }
 }
 
 /* Portrait tablet / mobile — pill stacks vertically */

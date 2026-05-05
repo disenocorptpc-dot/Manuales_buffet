@@ -19,11 +19,41 @@ window.DECK_CONTENT = {
   ui: {
     home:        { es: "Inicio",     en: "Home" },
     setMenus:    { es: "Set Menus",  en: "Set Menus" },
+    customMenu:  { es: "Customized Menu", en: "Customized Menu" },
     chooseOne:   { es: "Elige 1 opción", en: "Choose 1 option" },
+    chooseThree: { es: "Elige 3 opciones", en: "Choose 3 options" },
     chooseSection: { es: "Set Menus  ·  Customized Menu", en: "Set Menus  ·  Customized Menu" },
     setMenusTagline: {
       es: "Cada experiencia ha sido cuidadosamente diseñada y elaborada a la más alta calidad.",
       en: "Each experience has been carefully crafted and custom made to the highest quality.",
+    },
+    customMenuIntroTitle: {
+      es: "Crea tu experiencia perfecta",
+      en: "Create your perfect experience",
+    },
+    customMenuIntroBody: {
+      es: "Descubra cada una de nuestras estaciones para crear una experiencia perfecta a la hora del desayuno. En cada sección se indica el número de platillos que podrá elegir para armar su propio menú.",
+      en: "Discover each of our stations to create a perfect breakfast experience. Each section indicates the number of dishes you may choose to build your own menu.",
+    },
+    customMenuIntroCTA: {
+      es: "¡Buen provecho!",
+      en: "Bon appétit!",
+    },
+    customMenuClientLabel: {
+      es: "Nombre del cliente",
+      en: "Client name",
+    },
+    customMenuClientPlaceholder: {
+      es: "Ingrese el nombre aquí...",
+      en: "Enter name here...",
+    },
+    customMenuContinue: {
+      es: "Continuar",
+      en: "Continue",
+    },
+    backToCategories: {
+      es: "Categorías",
+      en: "Categories",
     },
     allergyDisclaimer: {
       es: "Este alimento contiene frutos secos o semillas que pueden causar alergias.",
@@ -207,22 +237,109 @@ window.DECK_CONTENT = {
     },
   },
 
+  // ── Custom Menu categories ─────────────────────────────────────
+  // Each category has a max of 3 selectable items.
+  customCategories: {
+    "comienzo": {
+      id: "comienzo",
+      title: { es: "Para un buen comienzo", en: "A Great Start" },
+      subtitle: { es: "Elige 3 opciones", en: "Choose 3 options" },
+      max: 3,
+      icon: "🌿",
+      hero: "https://images.unsplash.com/photo-1543362906-acfc16c67564?auto=format&fit=crop&w=1200&q=80",
+      items: [
+        { id: "c1", label: { es: "Jugo de naranja natural", en: "Fresh orange juice" }, tags: ["vegan", "vegetarian", "glutenFree"] },
+        { id: "c2", label: { es: "Jugo verde detox", en: "Green detox juice" }, tags: ["vegan", "vegetarian", "glutenFree"] },
+        { id: "c3", label: { es: "Fruta de temporada", en: "Seasonal fruit" }, tags: ["vegan", "vegetarian", "glutenFree"] },
+        { id: "c4", label: { es: "Granola con yogurt y miel", en: "Granola with yogurt & honey" }, tags: ["vegetarian", "glutenFree"] },
+        { id: "c5", label: { es: "Avena cremosa con frutos rojos", en: "Creamy oatmeal with berries" }, tags: ["vegetarian"] },
+        { id: "c6", label: { es: "Ensalada de frutas exóticas", en: "Exotic fruit salad" }, tags: ["vegan", "vegetarian", "glutenFree"] },
+        { id: "c7", label: { es: "Smoothie de plátano y fresa", en: "Banana & strawberry smoothie" }, tags: ["vegetarian", "glutenFree"] },
+        { id: "c8", label: { es: "Agua fresca de jamaica", en: "Hibiscus agua fresca" }, tags: ["vegan", "vegetarian", "glutenFree"] },
+      ],
+    },
+    "dulce": {
+      id: "dulce",
+      title: { es: "Una dulce elección", en: "A Sweet Choice" },
+      subtitle: { es: "Elige 3 opciones", en: "Choose 3 options" },
+      max: 3,
+      icon: "🥐",
+      hero: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1200&q=80",
+      items: [
+        { id: "d1", label: { es: "Croissant de mantequilla", en: "Butter croissant" }, tags: ["vegetarian"] },
+        { id: "d2", label: { es: "Pain au chocolat", en: "Pain au chocolat" }, tags: ["vegetarian"] },
+        { id: "d3", label: { es: "Concha de vainilla", en: "Vanilla concha" }, tags: ["vegetarian"] },
+        { id: "d4", label: { es: "Hotcakes con maple y berries", en: "Pancakes with maple & berries" }, tags: ["vegetarian"] },
+        { id: "d5", label: { es: "Waffles con crema y fresas", en: "Waffles with cream & strawberries" }, tags: ["vegetarian"] },
+        { id: "d6", label: { es: "French toast con canela", en: "Cinnamon french toast" }, tags: ["vegetarian"] },
+        { id: "d7", label: { es: "Muffin de arándano", en: "Blueberry muffin" }, tags: ["vegetarian"] },
+        { id: "d8", label: { es: "Rol de canela glaseado", en: "Glazed cinnamon roll" }, tags: ["vegetarian"] },
+      ],
+    },
+    "principal": {
+      id: "principal",
+      title: { es: "Plato Principal", en: "Main Course" },
+      subtitle: { es: "Elige 3 opciones", en: "Choose 3 options" },
+      max: 3,
+      icon: "🍳",
+      hero: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=1200&q=80",
+      items: [
+        { id: "p1", label: { es: "Huevos al gusto (estrellados, tibios, revueltos)", en: "Eggs your way (fried, soft-boiled, scrambled)" }, tags: ["vegetarian"] },
+        { id: "p2", label: { es: "Omelette de tres quesos", en: "Three-cheese omelette" }, tags: ["vegetarian"] },
+        { id: "p3", label: { es: "Eggs Benedict con salsa holandesa", en: "Eggs Benedict with hollandaise" }, tags: [] },
+        { id: "p4", label: { es: "Chilaquiles verdes con pollo deshebrado", en: "Green chilaquiles with shredded chicken" }, tags: [] },
+        { id: "p5", label: { es: "Machaca con huevo a la mexicana", en: "Machaca with Mexican-style egg" }, tags: [] },
+        { id: "p6", label: { es: "Huevos divorciados (salsa roja y verde)", en: "Divorced eggs (red & green salsa)" }, tags: ["vegetarian"] },
+        { id: "p7", label: { es: "Shakshuka de jitomate y pimiento", en: "Tomato & pepper shakshuka" }, tags: ["vegetarian"] },
+        { id: "p8", label: { es: "Tortilla española con papas", en: "Spanish omelette with potatoes" }, tags: ["vegetarian"] },
+      ],
+    },
+    "acompanar": {
+      id: "acompanar",
+      title: { es: "Para acompañar", en: "On the Side" },
+      subtitle: { es: "Elige 3 opciones", en: "Choose 3 options" },
+      max: 3,
+      icon: "🥓",
+      hero: "https://images.unsplash.com/photo-1533920379810-6bedac961555?auto=format&fit=crop&w=1200&q=80",
+      items: [
+        { id: "a1", label: { es: "Tocino crujiente", en: "Crispy bacon" }, tags: ["glutenFree"] },
+        { id: "a2", label: { es: "Salchicha de pavo", en: "Turkey sausage" }, tags: ["glutenFree"] },
+        { id: "a3", label: { es: "Hash browns dorados", en: "Golden hash browns" }, tags: ["vegan", "vegetarian"] },
+        { id: "a4", label: { es: "Frijoles refritos con queso", en: "Refried beans with cheese" }, tags: ["vegetarian", "glutenFree"] },
+        { id: "a5", label: { es: "Tortillas de maíz hechas a mano", en: "Hand-made corn tortillas" }, tags: ["vegan", "vegetarian", "glutenFree"] },
+        { id: "a6", label: { es: "Tostadas integrales con mantequilla", en: "Whole wheat toast with butter" }, tags: ["vegetarian"] },
+        { id: "a7", label: { es: "Aguacate en rebanadas con limón", en: "Sliced avocado with lime" }, tags: ["vegan", "vegetarian", "glutenFree"] },
+        { id: "a8", label: { es: "Queso fresco con epazote", en: "Fresh cheese with epazote" }, tags: ["vegetarian", "glutenFree"] },
+      ],
+    },
+  },
+
   // ── Deck structure ─────────────────────────────────────────────
   // Each entry is a slide. Type maps to a component in slides.jsx.
   deck: [
     { id: "cover",     type: "cover" },
-    { id: "section-set-menus", type: "section", overline: { es: "Capítulo 01", en: "Chapter 01" }, title: { es: "Set Menus", en: "Set Menus" }, subtitle: { es: "Customized Menu", en: "Customized Menu" } },
+    { id: "section-menu-type", type: "section" },
+    // ── Set Menus flow ──────────────────────────────────────────
     { id: "selector",  type: "selector",
       overline: { es: "Set Menus", en: "Set Menus" },
       heading:  { es: "Elige 1 opción", en: "Choose 1 option" },
       taglineKey: "setMenusTagline",
       options: ["mexican-morning", "classic-american"],
     },
-    { id: "menu-mexican-morning",  type: "menuHeader", menuId: "mexican-morning" },
+    { id: "menu-mexican-morning",        type: "menuHeader", menuId: "mexican-morning" },
     { id: "menu-mexican-morning-detail", type: "menuDetail", menuId: "mexican-morning" },
-    { id: "menu-classic-american", type: "menuHeader", menuId: "classic-american" },
-    { id: "menu-classic-american-detail", type: "menuDetail", menuId: "classic-american" },
-    { id: "menu-continental",      type: "menuHeader", menuId: "continental" },
-    { id: "menu-continental-detail", type: "menuDetail", menuId: "continental" },
+    { id: "menu-classic-american",       type: "menuHeader", menuId: "classic-american" },
+    { id: "menu-classic-american-detail",type: "menuDetail", menuId: "classic-american" },
+    { id: "menu-continental",            type: "menuHeader", menuId: "continental" },
+    { id: "menu-continental-detail",     type: "menuDetail", menuId: "continental" },
+    // ── Custom Menu flow ────────────────────────────────────────
+    { id: "custom-intro",      type: "customIntro" },
+    { id: "custom-selector",   type: "customSelector",
+      categories: ["comienzo", "dulce", "principal", "acompanar"],
+    },
+    { id: "custom-comienzo",   type: "customSection", categoryId: "comienzo" },
+    { id: "custom-dulce",      type: "customSection", categoryId: "dulce" },
+    { id: "custom-principal",  type: "customSection", categoryId: "principal" },
+    { id: "custom-acompanar",  type: "customSection", categoryId: "acompanar" },
   ],
 };

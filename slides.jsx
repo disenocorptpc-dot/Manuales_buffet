@@ -58,9 +58,6 @@ function RingsCorner() {
   );
 }
 
-// Section divider rings — kept for potential reuse but not rendered on section slide
-// (the background photo already carries the decorative rings)
-
 // Menu header rings — large concentric circles centered behind the photo
 function RingsConcentric({ cx = 960, cy = 540, count = 12, base = 240, step = 18 }) {
   return (
@@ -156,7 +153,7 @@ function CoverSlide({ lang }) {
 }
 
 // ── Slide: Section divider (two icons, clickable) ─────────────
-function SectionSlide({ slide, lang, onGoToSelector }) {
+function SectionSlide({ slide, lang, onGoToSelector, onGoToCustomMenu }) {
   return (
     <div className="slide section-slide surface-olive">
       <div className="section-bg" style={{ backgroundImage: 'url(_recursos/imagenes/B2.webp)' }} />
@@ -166,7 +163,7 @@ function SectionSlide({ slide, lang, onGoToSelector }) {
           <div className="section-option-icon"><IconSetMenus /></div>
           <div className="section-option-label">Set Menus</div>
         </button>
-        <button className="section-option" onClick={onGoToSelector} aria-label="Ver Customized Menu">
+        <button className="section-option" onClick={onGoToCustomMenu} aria-label="Ver Customized Menu">
           <div className="section-option-icon"><IconCustomizedMenu /></div>
           <div className="section-option-label">Customized<br />Menu</div>
         </button>
@@ -214,7 +211,6 @@ function SelectorSlide({ slide, lang, onPickMenu }) {
 function MenuHeaderSlide({ slide, lang }) {
   const m = window.DECK_CONTENT.menus[slide.menuId];
   const title = t(m.title, lang);
-  // Split into two words for the side labels (PDF puts MEXICAN | photo | MORNING)
   const [first, ...rest] = title.split(" ");
   const second = rest.join(" ") || "";
   return (
@@ -290,15 +286,209 @@ function MenuDetailSlide({ slide, lang }) {
   );
 }
 
+// ── Slide: Custom Menu — Intro + Client Name ──────────────────
+function CustomIntroSlide({ lang, clientName, setClientName, onContinue }) {
+  const { ui } = window.DECK_CONTENT;
+  return (
+    <div className="slide custom-intro-slide surface-paper">
+      <div className="grain" />
+      <div className="custom-intro-rings"><RingsCorner /></div>
+
+      <div className="custom-intro-content">
+        <div className="custom-intro-text-block">
+          <div className="custom-intro-overline">{t(ui.customMenu, lang)}</div>
+          <h2 className="custom-intro-title">{t(ui.customMenuIntroTitle, lang)}</h2>
+          <p className="custom-intro-body">{t(ui.customMenuIntroBody, lang)}</p>
+          <p className="custom-intro-cta">{t(ui.customMenuIntroCTA, lang)}</p>
+        </div>
+
+        <div className="custom-intro-form">
+          <label className="custom-intro-label" htmlFor="client-name-input">
+            {t(ui.customMenuClientLabel, lang)}
+          </label>
+          <input
+            id="client-name-input"
+            className="custom-intro-input"
+            type="text"
+            value={clientName}
+            onChange={e => setClientName(e.target.value)}
+            placeholder={t(ui.customMenuClientPlaceholder, lang)}
+            spellCheck
+            autoComplete="off"
+          />
+          <button
+            className="custom-intro-btn"
+            onClick={onContinue}
+            disabled={!clientName.trim()}
+          >
+            {t(ui.customMenuContinue, lang)}
+            <span className="custom-intro-btn-arrow">→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Slide: Custom Menu Selector — 4 category pills ────────────
+function CustomSelectorSlide({ slide, lang, onPickCategory }) {
+  const { customCategories } = window.DECK_CONTENT;
+  const categories = slide.categories.map(id => customCategories[id]);
+  return (
+    <div className="slide custom-selector-slide surface-paper">
+      <div className="grain" />
+      <div className="custom-selector-rings"><RingsCorner /></div>
+      <div className="custom-selector-content">
+        <header className="custom-selector-header">
+          <div className="custom-selector-overline">Customized Menu</div>
+          <h2 className="custom-selector-title">
+            {lang === 'es' ? 'Arma tu menú' : 'Build your menu'}
+          </h2>
+          <p className="custom-selector-sub">
+            {lang === 'es'
+              ? 'Selecciona una categoría para comenzar'
+              : 'Select a category to get started'}
+          </p>
+        </header>
+
+        <div className="custom-category-pills">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              className="custom-category-pill"
+              onClick={() => onPickCategory(cat.id)}
+              aria-label={t(cat.title, lang)}
+            >
+              <div
+                className="custom-pill-bg"
+                style={{ backgroundImage: `url(${cat.hero})` }}
+              />
+              <div className="custom-pill-overlay" />
+              <div className="custom-pill-body">
+                <span className="custom-pill-icon">{cat.icon}</span>
+                <span className="custom-pill-label">{t(cat.title, lang)}</span>
+                <span className="custom-pill-count">{t(cat.subtitle, lang)}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Slide: Custom Section — selectable food items ─────────────
+function CustomSectionSlide({ slide, lang, selections, onToggleItem, onGoToCustomSelector }) {
+  const { customCategories, ui } = window.DECK_CONTENT;
+  const cat = customCategories[slide.categoryId];
+  const selected = selections[cat.id] || [];
+  const isSelected = (itemId) => selected.includes(itemId);
+  const count = selected.length;
+  const isFull = count >= cat.max;
+
+  const toggle = (itemId) => {
+    if (isSelected(itemId)) {
+      onToggleItem(cat.id, selected.filter(id => id !== itemId));
+    } else if (!isFull) {
+      onToggleItem(cat.id, [...selected, itemId]);
+    }
+  };
+
+  return (
+    <div className="slide custom-section-slide surface-paper">
+      <div className="grain" />
+      <div className="custom-section-rings">
+        <RingsConcentric cx={1560} cy={540} count={10} base={200} step={22} />
+      </div>
+
+      <div className="custom-section-content">
+        {/* Left — hero image */}
+        <div className="custom-section-photo-wrap">
+          <div
+            className="custom-section-photo"
+            style={{ backgroundImage: `url(${cat.hero})` }}
+          />
+          <div className="custom-section-photo-label">
+            <span className="custom-section-icon">{cat.icon}</span>
+            <span>{t(cat.title, lang)}</span>
+          </div>
+        </div>
+
+        {/* Right — selectable items */}
+        <div className="custom-section-items-panel">
+          <div className="custom-section-panel-header">
+            <h2 className="custom-section-title">{t(cat.title, lang)}</h2>
+            <div className={`custom-section-counter ${isFull ? 'is-full' : ''}`}>
+              <span className="counter-num">{count}</span>
+              <span className="counter-sep">/</span>
+              <span className="counter-max">{cat.max}</span>
+              <span className="counter-label">
+                {lang === 'es' ? 'seleccionados' : 'selected'}
+              </span>
+            </div>
+          </div>
+
+          <ul className="custom-section-list">
+            {cat.items.map((item) => {
+              const sel = isSelected(item.id);
+              const disabled = !sel && isFull;
+              return (
+                <li key={item.id}>
+                  <button
+                    className={`custom-item-row ${sel ? 'is-selected' : ''} ${disabled ? 'is-disabled' : ''}`}
+                    onClick={() => toggle(item.id)}
+                    disabled={disabled}
+                    aria-pressed={sel}
+                    aria-label={t(item.label, lang)}
+                  >
+                    <span className={`custom-item-check ${sel ? 'is-checked' : ''}`}>
+                      {sel ? <i className="ti ti-check" /> : null}
+                    </span>
+                    <span className="custom-item-label">{t(item.label, lang)}</span>
+                    <DietMarks tags={item.tags} />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+
+          <button
+            className="custom-section-back"
+            onClick={onGoToCustomSelector}
+          >
+            <i className="ti ti-arrow-left" />
+            {t(ui.backToCategories, lang)}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Dispatcher ────────────────────────────────────────────────
-function Slide({ slide, lang, onPickMenu, onGoToSelector }) {
+function Slide({ slide, lang, onPickMenu, onGoToSelector, onGoToCustomMenu,
+                 onPickCategory, onGoToCustomSelector,
+                 clientName, setClientName, onContinueToCustomSelector,
+                 selections, onToggleItem }) {
   switch (slide.type) {
-    case "cover":      return <CoverSlide lang={lang} />;
-    case "section":    return <SectionSlide slide={slide} lang={lang} onGoToSelector={onGoToSelector} />;
-    case "selector":   return <SelectorSlide slide={slide} lang={lang} onPickMenu={onPickMenu} />;
-    case "menuHeader": return <MenuHeaderSlide slide={slide} lang={lang} />;
-    case "menuDetail": return <MenuDetailSlide slide={slide} lang={lang} />;
-    default: return <div className="slide">Unknown: {slide.type}</div>;
+    case "cover":
+      return <CoverSlide lang={lang} />;
+    case "section":
+      return <SectionSlide slide={slide} lang={lang} onGoToSelector={onGoToSelector} onGoToCustomMenu={onGoToCustomMenu} />;
+    case "selector":
+      return <SelectorSlide slide={slide} lang={lang} onPickMenu={onPickMenu} />;
+    case "menuHeader":
+      return <MenuHeaderSlide slide={slide} lang={lang} />;
+    case "menuDetail":
+      return <MenuDetailSlide slide={slide} lang={lang} />;
+    case "customIntro":
+      return <CustomIntroSlide lang={lang} clientName={clientName} setClientName={setClientName} onContinue={onContinueToCustomSelector} />;
+    case "customSelector":
+      return <CustomSelectorSlide slide={slide} lang={lang} onPickCategory={onPickCategory} />;
+    case "customSection":
+      return <CustomSectionSlide slide={slide} lang={lang} selections={selections} onToggleItem={onToggleItem} onGoToCustomSelector={onGoToCustomSelector} />;
+    default:
+      return <div className="slide">Unknown: {slide.type}</div>;
   }
 }
 

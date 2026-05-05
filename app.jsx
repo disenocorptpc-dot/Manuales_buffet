@@ -15,6 +15,16 @@ function App() {
   // Edit mode toggle — no URL param needed
   const [editMode, setEditMode] = useState(false);
 
+  // ── Custom Menu state ──────────────────────────────────────────
+  // clientName: string entered on the intro slide
+  const [clientName, setClientName] = useState('');
+  // selections: { [categoryId]: string[] } — selected item IDs per category
+  const [selections, setSelections] = useState({});
+
+  const onToggleItem = useCallback((catId, newIds) => {
+    setSelections(prev => ({ ...prev, [catId]: newIds }));
+  }, []);
+
   // Read initial position from URL hash
   const initial = useMemo(() => {
     const m = (window.location.hash || '').match(/#\/(\d+)(?:\/(es|en))?/);
@@ -41,9 +51,42 @@ function App() {
   const slide = deck[idx] || deck[0];
 
   const goTo       = useCallback((i) => setIdx(Math.min(deck.length - 1, Math.max(0, i))), [deck.length]);
-  const goHome     = () => goTo(0);
-  const goSetMenus = () => { const i = deck.findIndex(s => s.type === 'selector'); if (i >= 0) goTo(i); };
-  const onPickMenu = (menuId) => { const i = deck.findIndex(s => s.type === 'menuHeader' && s.menuId === menuId); if (i >= 0) goTo(i); };
+
+  // Home → section slide (Set Menu / Custom Menu selector), NOT the cover
+  const goHome     = useCallback(() => {
+    const i = deck.findIndex(s => s.type === 'section');
+    if (i >= 0) goTo(i); else goTo(0);
+  }, [deck, goTo]);
+
+  // Navigate to Set Menus selector pill
+  const goSetMenus = useCallback(() => {
+    const i = deck.findIndex(s => s.type === 'selector');
+    if (i >= 0) goTo(i);
+  }, [deck, goTo]);
+
+  // Navigate to Custom Menu intro
+  const goCustomMenu = useCallback(() => {
+    const i = deck.findIndex(s => s.type === 'customIntro');
+    if (i >= 0) goTo(i);
+  }, [deck, goTo]);
+
+  // Navigate to Custom Menu category selector
+  const goCustomSelector = useCallback(() => {
+    const i = deck.findIndex(s => s.type === 'customSelector');
+    if (i >= 0) goTo(i);
+  }, [deck, goTo]);
+
+  // Pick a Set Menu by ID → go to its header slide
+  const onPickMenu = useCallback((menuId) => {
+    const i = deck.findIndex(s => s.type === 'menuHeader' && s.menuId === menuId);
+    if (i >= 0) goTo(i);
+  }, [deck, goTo]);
+
+  // Pick a Custom Category by ID → go to its section slide
+  const onPickCategory = useCallback((catId) => {
+    const i = deck.findIndex(s => s.type === 'customSection' && s.categoryId === catId);
+    if (i >= 0) goTo(i);
+  }, [deck, goTo]);
 
   // Keyboard nav (only in presentation mode)
   useEffect(() => {
@@ -57,27 +100,48 @@ function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, [idx, editMode]);
 
-  const isCover     = slide.type === 'cover';
-  const isMenuSlide = slide.type === 'menuHeader' || slide.type === 'menuDetail';
-  const chromeOnOlive = window.SLIDE_IS_OLIVE ? window.SLIDE_IS_OLIVE(slide) : false;
+  const isCover        = slide.type === 'cover';
+  const isSection      = slide.type === 'section';
+  const isMenuSlide    = slide.type === 'menuHeader' || slide.type === 'menuDetail';
+  const isCustomFlow   = slide.type === 'customIntro' || slide.type === 'customSelector' || slide.type === 'customSection';
+  const chromeOnOlive  = window.SLIDE_IS_OLIVE ? window.SLIDE_IS_OLIVE(slide) : false;
 
   // ── Viewer ─────────────────────────────────────────────────────
   const viewer = (
     <div className="app" data-screen-label={`${String(idx + 1).padStart(2, '0')} ${slide.id}`}>
       <main className="stage">
-        <Slide slide={slide} lang={lang} onPickMenu={onPickMenu} onGoToSelector={goSetMenus} />
+        <Slide
+          slide={slide}
+          lang={lang}
+          onPickMenu={onPickMenu}
+          onGoToSelector={goSetMenus}
+          onGoToCustomMenu={goCustomMenu}
+          onPickCategory={onPickCategory}
+          onGoToCustomSelector={goCustomSelector}
+          clientName={clientName}
+          setClientName={setClientName}
+          onContinueToCustomSelector={goCustomSelector}
+          selections={selections}
+          onToggleItem={onToggleItem}
+        />
       </main>
 
       {/* Top chrome */}
       <header className={`chrome chrome-top ${chromeOnOlive ? 'chrome--olive' : ''}`}>
         <div className="chrome-left">
-          {!isCover && (
+          {!isCover && !isSection && (
             <button className="chrome-link" onClick={goHome}>
               <i className="ti ti-home" />{t(ui.home, lang)}
             </button>
           )}
           {isMenuSlide && (
             <button className="chrome-link" onClick={goSetMenus}>{t(ui.setMenus, lang)}</button>
+          )}
+          {isCustomFlow && (
+            <button className="chrome-link" onClick={goCustomSelector}>
+              <i className="ti ti-layout-grid" />
+              {t(ui.customMenu, lang)}
+            </button>
           )}
         </div>
         <div className="chrome-center" aria-hidden="true" />

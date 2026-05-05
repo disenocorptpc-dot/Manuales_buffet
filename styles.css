@@ -98,6 +98,123 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   MC-LEFT — contained panel: rings + photo always aligned
+   ═══════════════════════════════════════════════════════════════ */
+.menu-detail-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: clamp(24px, 3vw, 56px);
+  padding: 72px 5vw;
+  min-height: 100%;
+}
+
+/* Replace old photo-wrap/photo with mc-left */
+.mc-left {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: clamp(260px, 40vh, 520px);
+}
+.mc-rings-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.mc-photo {
+  position: relative;
+  z-index: 1;
+  width: clamp(200px, 28vw, 380px);
+  height: clamp(200px, 28vw, 380px);
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center center;
+  box-shadow: 0 12px 40px -10px rgba(0,0,0,0.32);
+  flex-shrink: 0;
+}
+
+/* ── Menu item hot-kitchen (with description) ──────────────── */
+.menu-item-hot {
+  flex-direction: column;
+  align-items: flex-start !important;
+  gap: 3px;
+  padding-bottom: 10px;
+}
+.menu-item-name {
+  font-family: var(--sans);
+  font-size: clamp(11px, 1.05vw, 14px);
+  font-weight: 600;
+  color: var(--buffet-ink);
+  line-height: 1.3;
+}
+.menu-item-hot .menu-item-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.menu-item-desc {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(10px, 0.9vw, 12px);
+  line-height: 1.55;
+  color: var(--buffet-ink-soft);
+}
+
+/* Override menu-category-items li to support both layouts */
+.menu-category-items li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--buffet-ink);
+  padding-bottom: 6px;
+}
+.menu-category-items li + li {
+  border-top: 1px solid var(--buffet-line-soft);
+  padding-top: 6px;
+}
+
+/* ── Custom section: divider lines between items ───────────── */
+.cs-item-wrap + .cs-item-wrap {
+  border-top: 1px solid var(--buffet-line-soft);
+}
+.custom-item-row {
+  border: none !important; /* remove per-row border, use cs-item-wrap top border instead */
+  border-radius: 6px;
+  padding: 10px 10px 10px 6px;
+}
+
+/* Summary items with inline diet marks */
+.summary-item-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* ── Menu page 2 fallback (mp2) ─────────────────────────────── */
+.mp2-subheading {
+  font-family: var(--sans);
+  font-size: 9px;
+  letter-spacing: 0.44em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--buffet-bronze);
+  margin: -10px 0 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
    MENU PAGE 2 — Nuestra Selección (hot kitchen items)
    ═══════════════════════════════════════════════════════════════ */
 .mp2-subheading {

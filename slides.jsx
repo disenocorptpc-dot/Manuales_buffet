@@ -208,8 +208,6 @@ function MenuHeaderSlide({ slide, lang }) {
 }
 
 // ── Menu Content (shared for page 0 and page 1) ───────────────
-// Left: contained rings + circle photo (always aligned)
-// Right: category groups with items + diet icons
 function MenuContentSlide({ slide, lang }) {
   const m    = window.DECK_CONTENT.menus[slide.menuId];
   const page = m.pages[slide.pageIndex];
@@ -217,14 +215,15 @@ function MenuContentSlide({ slide, lang }) {
   const first=titleWords[0], second=titleWords.slice(1).join(" ");
 
   return (
-    <div className="slide menu-detail-slide" style={{
+    <div className="slide" style={{
       position:"relative",
+      backgroundColor: C.paper,
       backgroundImage:"url(_recursos/imagenes/05_Fondo_beige_menu.jpg)",
       backgroundSize:"cover", backgroundPosition:"center"
     }}>
       <div className="grain" />
 
-      {/* Left 50%: full-bleed hero photo */}
+      {/* Left 50%: hero photo */}
       <div style={{
         position:"absolute", top:0, left:0, width:"50%", height:"100%",
         backgroundImage:`url(${m.hero})`,
@@ -238,37 +237,67 @@ function MenuContentSlide({ slide, lang }) {
         pointerEvents:"none"
       }} />
 
-      {/* Right 50%: title + menu groups */}
-      <div className="menu-detail-text" style={{
+      {/* Right 50%: content */}
+      <div style={{
         position:"absolute", top:0, left:"50%", right:0, bottom:0,
-        overflowY:"auto", padding:"60px clamp(28px,4vw,56px) 80px",
-        display:"flex", flexDirection:"column", justifyContent:"center"
+        overflowY:"auto",
+        padding:"60px clamp(24px,3.5vw,52px) 80px",
+        display:"flex", flexDirection:"column", justifyContent:"center",
+        boxSizing:"border-box"
       }}>
-        <h2 className="menu-detail-title">
-          <span className="first">{first}</span>
-          {second ? <span className="second"> {second}</span> : null}
+        {/* Title */}
+        <h2 style={{
+          margin:"0 0 20px", fontFamily:SERIF, fontWeight:400,
+          fontSize:"clamp(18px,2vw,28px)", letterSpacing:"0.28em",
+          textTransform:"uppercase", lineHeight:1.25,
+          paddingBottom:20,
+          borderBottom:`1px solid ${C.line}`
+        }}>
+          <span style={{color:C.bronze}}>{first}</span>
+          {second && <span style={{color:C.inkSoft}}> {second}</span>}
         </h2>
 
-          <div className="menu-categories">
-            {page.groups.map((grp, gi) => (
-              <section key={gi} className="menu-category">
-                <h3 className="menu-category-title">{t(grp.title,lang)}</h3>
-                <ul className="menu-category-items">
-                  {grp.items.map((item, ii) => (
-                    <li key={ii} className={grp.isHotKitchen ? "menu-item-hot" : ""}>
-                      <span className="menu-item-name-wrap" style={{display:"inline-flex",alignItems:"center",gap:5,flexWrap:"wrap"}}>
-                        <span className="menu-item-name">{t(item.label,lang)}</span>
-                        <DietMarks tags={item.tags} size={13} />
-                      </span>
-                      {grp.isHotKitchen && item.description && (
-                        <p className="menu-item-desc">{t(item.description,lang)}</p>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))}
-          </div>
+        {/* Categories */}
+        <div style={{display:"flex", flexDirection:"column", gap:20}}>
+          {page.groups.map((grp, gi) => (
+            <div key={gi} style={{
+              paddingBottom: gi < page.groups.length-1 ? 18 : 0,
+              borderBottom: gi < page.groups.length-1 ? `1px solid rgba(42,40,32,0.10)` : "none"
+            }}>
+              {/* Category heading */}
+              <div style={{
+                marginBottom:8, fontFamily:SERIF, fontWeight:500,
+                fontSize:"clamp(16px,1.8vw,24px)", letterSpacing:"0.32em",
+                textTransform:"uppercase", color:C.bronze
+              }}>{t(grp.title, lang)}</div>
+
+              {/* Items */}
+              <div style={{display:"flex", flexDirection:"column", gap: grp.isHotKitchen ? 10 : 3}}>
+                {grp.items.map((item, ii) => (
+                  <div key={ii}>
+                    <div style={{display:"inline-flex", alignItems:"center", gap:6, flexWrap:"wrap"}}>
+                      <span style={{
+                        fontFamily:SANS, fontSize:"clamp(11px,1.1vw,14px)",
+                        lineHeight:1.55, color: grp.isHotKitchen ? C.ink : C.inkSoft,
+                        letterSpacing: grp.isHotKitchen ? "0.02em" : "0.08em",
+                        textTransform: grp.isHotKitchen ? "none" : "uppercase",
+                        fontWeight: grp.isHotKitchen ? 400 : 500
+                      }}>{t(item.label, lang)}</span>
+                      <DietMarks tags={item.tags} size={12} />
+                    </div>
+                    {grp.isHotKitchen && item.description && (
+                      <p style={{
+                        margin:"2px 0 0", fontFamily:SERIF, fontStyle:"italic",
+                        fontSize:"clamp(11px,1vw,13px)", color:C.inkFaint,
+                        lineHeight:1.5
+                      }}>{t(item.description, lang)}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

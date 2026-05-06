@@ -295,3 +295,8 @@
   color: var(--buffet-ink-soft);
 }
 
+
+/* -- Menu Content Title --------------------------------------- */
+.menu-detail-title { margin: 0 0 32px 0; font-family: var(--serif); font-weight: 700; color: var(--buffet-ink); line-height: 1.1; text-transform: uppercase; }
+.menu-detail-title .first { display: block; font-size: clamp(32px, 3.6vw, 48px); letter-spacing: 0.12em; }
+.menu-detail-title .second { display: block; font-size: 0.6em; font-weight: 400; color: var(--buffet-bronze); letter-spacing: 0.22em; margin-top: 8px; }

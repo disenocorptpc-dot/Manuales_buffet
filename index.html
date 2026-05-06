@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#2d3528" />
 
-  <!-- PWA / iOS Standalone -->
+  <!-- PWA / iOS & Android Standalone -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Palace Buffet" />
   <link rel="apple-touch-icon" href="/icon-180.png" />
   <link rel="manifest" href="/manifest.json" />
 
-  <!-- Preconnect for Typekit font -->
-  <link rel="preconnect" href="https://use.typekit.net" crossorigin />
-
-  <!-- Critical image preload (cover background) -->
-  <link rel="preload" as="image" href="/_recursos/imagenes/04_Fondo_beige_portada.jpg" />
-
   <title>Buffet Breakfast — Palace</title>
+
+  <!-- Typekit (DM Sans) — external, must stay as CDN link -->
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin />
   <link rel="stylesheet" href="https://use.typekit.net/chj8dep.css" />
+
+  <!-- Tabler icons (local) -->
   <link rel="stylesheet" href="/tabler-icons.css" />
 </head>
 <body>

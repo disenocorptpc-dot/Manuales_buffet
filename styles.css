@@ -1,3 +1,20 @@
+:root {
+  --buffet-paper:        #e9e3d4;
+  --buffet-paper-deep:   #ddd5c2;
+  --buffet-olive:        #2d3528;
+  --buffet-olive-deep:   #232a1f;
+  --buffet-bronze:       #8a7d50;
+  --buffet-bronze-soft:  #a59668;
+  --buffet-ink:          #2a2820;
+  --buffet-ink-soft:     rgba(42, 40, 32, 0.62);
+  --buffet-ink-faint:    rgba(42, 40, 32, 0.32);
+  --buffet-line:         rgba(42, 40, 32, 0.20);
+  --buffet-line-soft:    rgba(42, 40, 32, 0.10);
+  --buffet-on-olive:     #d8d2bf;
+  --buffet-on-olive-soft:rgba(216, 210, 191, 0.62);
+  --serif: 'Cormorant Garamond', 'Cormorant', Garamond, serif;
+  --sans:  'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
 /* styles.css — Buffet deck visual system v2
    Faithful to the source PDF: olive-green + paper-cream, serif display,
    zen concentric lines, sutil grain texture, geometric photo crops.
@@ -308,3 +325,4 @@
 .menu-category-items li { display: flex; flex-direction: column; gap: 4px; }
 .menu-item-name { font-family: var(--sans); font-size: clamp(14px, 1.3vw, 16px); color: var(--buffet-ink); line-height: 1.3; }
 .menu-item-desc { margin: 0; font-family: var(--sans); font-size: clamp(12px, 1vw, 14px); color: var(--buffet-ink-soft); line-height: 1.4; font-style: italic; }
+

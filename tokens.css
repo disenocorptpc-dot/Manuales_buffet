@@ -29,6 +29,10 @@
   --color-copper-400:  #c69449;
   --color-marble-100:  #f0ede9;
 
+  /* ── Editorial / Menu brand colors (from Fuentes.pdf brand guide) ── */
+  --color-editorial-dark:  #61613C;  /* Olive dark — titles, headings, categories (tracking 400-500) */
+  --color-editorial-muted: #8D887D;  /* Olive muted — taglines, item text, leyenda (italic) */
+
   --color-grey-50:  #fafafa;
   --color-grey-100: #f5f5f5;
   --color-grey-200: #e5e5e5;
@@ -175,6 +179,50 @@
   /* ───────── Type ───────── */
   --font-base:  'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-brand: 'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* ── Brand editorial scale (Fuentes.pdf — pt values mapped to px, tracking from pt·1000 → em) ── */
+  /* Cover/section main title: 40pt ≈ 53px, tracking 500 (=0.5em) */
+  --font-editorial-hero-size:     clamp(36px, 5vw, 53px);
+  --font-editorial-hero-lh:       1.1;
+  --font-editorial-hero-ls:       0.5em;
+  --font-editorial-hero-weight:   400;
+  --font-editorial-hero-color:    var(--color-editorial-dark);
+
+  /* Cover subtitle: 20pt ≈ 27px, tracking 400 (=0.4em) */
+  --font-editorial-sub-size:      clamp(16px, 2.5vw, 27px);
+  --font-editorial-sub-lh:        1.2;
+  --font-editorial-sub-ls:        0.4em;
+  --font-editorial-sub-weight:    400;
+  --font-editorial-sub-color:     var(--color-editorial-dark);
+
+  /* Tagline / leyenda: 22pt ≈ 29px, tracking 0, italic */
+  --font-editorial-tagline-size:  clamp(14px, 2vw, 29px);
+  --font-editorial-tagline-lh:    1.4;
+  --font-editorial-tagline-ls:    0em;
+  --font-editorial-tagline-weight:400;
+  --font-editorial-tagline-style: italic;
+  --font-editorial-tagline-color: var(--color-editorial-muted);
+
+  /* Menu name (on slide header): 28pt ≈ 37px, tracking 400 (=0.4em) */
+  --font-editorial-menu-size:     clamp(22px, 3.5vw, 37px);
+  --font-editorial-menu-lh:       1.15;
+  --font-editorial-menu-ls:       0.4em;
+  --font-editorial-menu-weight:   400;    /* bold half in component via ::before */
+  --font-editorial-menu-color:    var(--color-editorial-dark);
+
+  /* Category title on content slides: 20pt ≈ 27px, tracking 400 */
+  --font-editorial-cat-size:      clamp(14px, 2vw, 27px);
+  --font-editorial-cat-lh:        1.2;
+  --font-editorial-cat-ls:        0.4em;
+  --font-editorial-cat-weight:    400;
+  --font-editorial-cat-color:     var(--color-editorial-dark);
+
+  /* Item list text: 20pt ≈ 27px, tracking 25 (≈0.025em), leading 30pt≈40px */
+  --font-editorial-item-size:     clamp(13px, 1.8vw, 20px);
+  --font-editorial-item-lh:       1.5;
+  --font-editorial-item-ls:       0.025em;
+  --font-editorial-item-weight:   400;
+  --font-editorial-item-color:    var(--color-editorial-muted);
 
   /* Display — desktop variants (Palace uses 400 weight, tight tracking) */
   --font-display-l-size: 72px; --font-display-l-lh: 80px; --font-display-l-ls: -1.44px; --font-display-l-weight: 400;

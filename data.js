@@ -29,7 +29,8 @@ window.DECK_CONTENT = {
     "mexican-morning": {
       title:    { es: "Mexican Morning",                       en: "Mexican Morning" },
       subtitle: { es: "Sabores tradicionales del amanecer mexicano", en: "Traditional flavors from the Mexican sunrise" },
-      hero: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=2400&q=80",
+      hero: "assets/img/02_mexican_morning.webp",
+      slideImg: "assets/img/03_mexican_morning_slide_1.webp",
       hasNuts: true,
       // pages[0] → jugos + fruta
       pages: [
@@ -84,7 +85,8 @@ window.DECK_CONTENT = {
     "classic-american": {
       title:    { es: "Tradicional Americano", en: "Classic American" },
       subtitle: { es: "El desayuno americano clásico, reinventado", en: "The classic American breakfast, reimagined" },
-      hero: "https://images.unsplash.com/photo-1533920379810-6bedac961555?auto=format&fit=crop&w=2400&q=80",
+      hero: "assets/img/08_desayuno_americano.webp",
+      slideImg: "assets/img/05_desayuno_americano.webp",
       hasNuts: true,
       pages: [
         {
@@ -140,7 +142,7 @@ window.DECK_CONTENT = {
     "comienzo": {
       id:"comienzo", title:{es:"Para un buen comienzo",en:"A Great Start"},
       subtitle:{es:"Elige 3 opciones",en:"Choose 3 options"}, max:3,
-      hero:"https://images.unsplash.com/photo-1543362906-acfc16c67564?auto=format&fit=crop&w=1200&q=80",
+      hero:"assets/img/09_un_buen_comienzo_custom_menu.webp",
       items:[
         {id:"c1",label:{es:"Jugo de naranja natural",      en:"Fresh orange juice"          },tags:["vegan","vegetarian","glutenFree"]},
         {id:"c2",label:{es:"Jugo verde detox",             en:"Green detox juice"           },tags:["vegan","vegetarian","glutenFree"]},
@@ -155,7 +157,7 @@ window.DECK_CONTENT = {
     "dulce": {
       id:"dulce", title:{es:"Una dulce elección",en:"A Sweet Choice"},
       subtitle:{es:"Elige 3 opciones",en:"Choose 3 options"}, max:3,
-      hero:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1200&q=80",
+      hero:"assets/img/06_una_dulce_eleccion_custom_menu.webp",
       items:[
         {id:"d1",label:{es:"Croissant de mantequilla",    en:"Butter croissant"           },tags:["vegetarian"]},
         {id:"d2",label:{es:"Pain au chocolat",            en:"Pain au chocolat"           },tags:["vegetarian"]},
@@ -170,7 +172,7 @@ window.DECK_CONTENT = {
     "principal": {
       id:"principal", title:{es:"Plato Principal",en:"Main Course"},
       subtitle:{es:"Elige 3 opciones",en:"Choose 3 options"}, max:3,
-      hero:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=1200&q=80",
+      hero:"assets/img/01_plato_principal_custom_menu.webp",
       items:[
         {id:"p1",label:{es:"Huevos al gusto (estrellados, tibios, revueltos)",en:"Eggs your way (fried, soft-boiled, scrambled)"},tags:["vegetarian"]},
         {id:"p2",label:{es:"Omelette de tres quesos",                          en:"Three-cheese omelette"                        },tags:["vegetarian"]},
@@ -185,7 +187,7 @@ window.DECK_CONTENT = {
     "acompanar": {
       id:"acompanar", title:{es:"Para acompañar",en:"On the Side"},
       subtitle:{es:"Elige 3 opciones",en:"Choose 3 options"}, max:3,
-      hero:"https://images.unsplash.com/photo-1533920379810-6bedac961555?auto=format&fit=crop&w=1200&q=80",
+      hero:"assets/img/07_para_acompañar_custom_menu.webp",
       items:[
         {id:"a1",label:{es:"Tocino crujiente",                en:"Crispy bacon"               },tags:["glutenFree"]},
         {id:"a2",label:{es:"Salchicha de pavo",               en:"Turkey sausage"             },tags:["glutenFree"]},

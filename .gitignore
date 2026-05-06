@@ -22,3 +22,5 @@ fonts/tabler/
 # Temporales
 *.tmp
 *.bak
+
+dist/

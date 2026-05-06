@@ -118,8 +118,11 @@ function SectionSlide({ lang, onGoToSelector, onGoToCustomMenu }) {
 function SelectorSlide({ slide, lang, onPickMenu }) {
   const { menus, ui } = window.DECK_CONTENT;
   return (
-    <div className="slide selector-slide surface-paper">
-      <div className="selector-rings"><RingsCorner /></div>
+    <div className="slide selector-slide surface-paper" style={{
+      backgroundImage: "url(_recursos/imagenes/03_Fondo_beige.jpg)",
+      backgroundSize: "cover",
+      backgroundPosition: "center"
+    }}>
       <div className="selector-content">
         <header className="selector-header">
           <h2 className="selector-title">Set Menus</h2>
@@ -150,21 +153,39 @@ function MenuHeaderSlide({ slide, lang }) {
   const words = t(m.title,lang).split(" ");
   const first=words[0], second=words.slice(1).join(" ");
   return (
-    <div className="slide menu-header-slide surface-paper">
+    <div className="slide menu-header-slide surface-paper" style={{
+      position:"relative",
+      backgroundImage:"url(_recursos/imagenes/04_Fondo_beige_portada.jpg)",
+      backgroundSize:"cover", backgroundPosition:"center"
+    }}>
       <div className="grain" />
-      <div className="menu-header-rings" style={{position:"absolute",inset:0,zIndex:1,pointerEvents:"none"}}>
-        <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet" style={{width:"100%",height:"100%",display:"block",opacity:0.55}}>
-          <g fill="none" stroke="#3a382b" strokeWidth="1">
-            {Array.from({length:14}).map((_,i)=>(
-              <circle key={i} cx={960} cy={540} r={220+i*20}/>
-            ))}
-          </g>
-        </svg>
-      </div>
-      <div className="menu-header-content">
-        <div className="menu-header-side">{first}</div>
-        <div className="menu-photo-circle" style={{backgroundImage:`url(${m.hero})`}} />
-        <div className="menu-header-side is-soft">{second}</div>
+      {/* Left 50% Hero Image */}
+      <div style={{
+        position:"absolute", top:0, left:0, width:"50%", height:"100%",
+        backgroundImage:`url(${m.hero})`,
+        backgroundSize:"cover", backgroundPosition:"center",
+        filter:"saturate(0.85) brightness(0.88)"
+      }} />
+      <div style={{
+        position:"absolute", top:0, left:"40%", width:"15%", height:"100%",
+        background:"linear-gradient(to right, rgba(0,0,0,0.14) 0%, transparent 100%)",
+        pointerEvents:"none"
+      }} />
+
+      {/* Right 50% Text */}
+      <div style={{
+        position:"absolute", top:0, left:"50%", right:0, bottom:0,
+        display:"flex", flexDirection:"column",
+        alignItems:"flex-start", justifyContent:"center",
+        padding:"0 6vw"
+      }}>
+        <div style={{fontFamily:"var(--sans)",fontSize:"10px",letterSpacing:"0.44em",fontWeight:700,textTransform:"uppercase",color:"var(--buffet-bronze)",marginBottom:18,opacity:0.8}}>Set Menu</div>
+        <h2 style={{margin:0,fontFamily:"var(--serif)",fontWeight:700,fontSize:"clamp(38px,4.8vw,72px)",lineHeight:1,letterSpacing:"0.12em",textTransform:"uppercase",color:"var(--buffet-ink)"}}>
+          <span style={{display:"block"}}>{first}</span>
+          {second && <span style={{display:"block",color:"var(--buffet-bronze)",fontWeight:400,fontSize:"0.72em",letterSpacing:"0.22em",marginTop:8}}>{second}</span>}
+        </h2>
+        <div style={{width:48,height:2,background:"var(--buffet-bronze)",margin:"28px 0",borderRadius:2}} />
+        {m.subtitle && <p style={{margin:0,fontFamily:"var(--serif)",fontStyle:"italic",fontSize:"clamp(14px,1.5vw,20px)",color:"var(--buffet-ink-soft)",lineHeight:1.6}}>{t(m.subtitle,lang)}</p>}
       </div>
     </div>
   );
@@ -180,23 +201,37 @@ function MenuContentSlide({ slide, lang }) {
   const first=titleWords[0], second=titleWords.slice(1).join(" ");
 
   return (
-    <div className="slide menu-detail-slide surface-paper">
+    <div className="slide menu-detail-slide" style={{
+      position:"relative",
+      backgroundImage:"url(_recursos/imagenes/05_Fondo_beige_menu.jpg)",
+      backgroundSize:"cover", backgroundPosition:"center"
+    }}>
       <div className="grain" />
-      <div className="menu-detail-content">
 
-        {/* LEFT — rings + photo in a shared container */}
-        <div className="mc-left">
-          <div className="mc-rings-wrap">
-            <RingsPanel count={13} base={85} step={13} />
-          </div>
-          <div className="mc-photo" style={{backgroundImage:`url(${m.hero})`}} />
-        </div>
+      {/* Left 50%: full-bleed hero photo */}
+      <div style={{
+        position:"absolute", top:0, left:0, width:"50%", height:"100%",
+        backgroundImage:`url(${m.hero})`,
+        backgroundSize:"cover", backgroundPosition:"center",
+        filter:"saturate(0.85) brightness(0.88)"
+      }} />
+      {/* Gradient edge */}
+      <div style={{
+        position:"absolute", top:0, left:"40%", width:"15%", height:"100%",
+        background:"linear-gradient(to right, rgba(0,0,0,0.14) 0%, transparent 100%)",
+        pointerEvents:"none"
+      }} />
 
-        {/* RIGHT — title + groups */}
-        <div className="menu-detail-text">
-          <h2 className="menu-detail-title">
-            <span className="first">{first}</span>{second ? <> <span className="second">{second}</span></> : null}
-          </h2>
+      {/* Right 50%: title + menu groups */}
+      <div className="menu-detail-text" style={{
+        position:"absolute", top:0, left:"50%", right:0, bottom:0,
+        overflowY:"auto", padding:"60px clamp(28px,4vw,56px) 80px",
+        display:"flex", flexDirection:"column", justifyContent:"center"
+      }}>
+        <h2 className="menu-detail-title">
+          <span className="first">{first}</span>
+          {second ? <span className="second"> {second}</span> : null}
+        </h2>
 
           <div className="menu-categories">
             {page.groups.map((grp, gi) => (
@@ -205,8 +240,10 @@ function MenuContentSlide({ slide, lang }) {
                 <ul className="menu-category-items">
                   {grp.items.map((item, ii) => (
                     <li key={ii} className={grp.isHotKitchen ? "menu-item-hot" : ""}>
-                      <span className="menu-item-name">{t(item.label,lang)}</span>
-                      <DietMarks tags={item.tags} size={13} />
+                      <span className="menu-item-name-wrap" style={{display:"inline-flex",alignItems:"center",gap:5,flexWrap:"wrap"}}>
+                        <span className="menu-item-name">{t(item.label,lang)}</span>
+                        <DietMarks tags={item.tags} size={13} />
+                      </span>
                       {grp.isHotKitchen && item.description && (
                         <p className="menu-item-desc">{t(item.description,lang)}</p>
                       )}
@@ -216,7 +253,6 @@ function MenuContentSlide({ slide, lang }) {
               </section>
             ))}
           </div>
-        </div>
       </div>
     </div>
   );

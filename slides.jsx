@@ -169,7 +169,6 @@ function MenuHeaderSlide({ slide, lang }) {
   const first=words[0], second=words.slice(1).join(" ");
   return (
     <div className="slide menu-header-slide" style={{
-      position:"relative",
       backgroundColor: C.paper,
       backgroundImage:"url(_recursos/imagenes/04_Fondo_beige_portada.jpg)",
       backgroundSize:"cover", backgroundPosition:"center"
@@ -216,7 +215,6 @@ function MenuContentSlide({ slide, lang }) {
 
   return (
     <div className="slide" style={{
-      position:"relative",
       backgroundColor: C.paper,
       backgroundImage:"url(_recursos/imagenes/05_Fondo_beige_menu.jpg)",
       backgroundSize:"cover", backgroundPosition:"center"
@@ -237,12 +235,12 @@ function MenuContentSlide({ slide, lang }) {
         pointerEvents:"none"
       }} />
 
-      {/* Right 50%: content */}
+      {/* Right 50%: content — flex-start avoids justify-center overflow bug */}
       <div style={{
         position:"absolute", top:0, left:"50%", right:0, bottom:0,
         overflowY:"auto",
-        padding:"60px clamp(24px,3.5vw,52px) 80px",
-        display:"flex", flexDirection:"column", justifyContent:"center",
+        padding:"clamp(60px,8vh,100px) clamp(24px,3.5vw,52px) 80px",
+        display:"flex", flexDirection:"column", justifyContent:"flex-start",
         boxSizing:"border-box"
       }}>
         {/* Title */}

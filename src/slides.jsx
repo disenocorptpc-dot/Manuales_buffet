@@ -233,6 +233,7 @@ function MenuContentSlide({ slide, lang }) {
         <div style={{
           width:"clamp(200px,38vmin,400px)", height:"clamp(200px,38vmin,400px)",
           borderRadius:"50%", overflow:"hidden",
+          border:"1.5px solid rgba(42,40,32,0.18)",
           backgroundImage:`url(${m.hero})`,
           backgroundSize:"cover", backgroundPosition:"center"
         }} />
@@ -437,17 +438,24 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
             })}
           </ul>
 
-          <div className="custom-section-footer">
-            <button className="custom-section-back" onClick={onGoToCustomSelector}>
+          {/* Footer — back + next, always on the same row */}
+          <div style={{
+            marginTop:16, display:"flex", flexDirection:"row",
+            alignItems:"center", justifyContent:"space-between", gap:12, flexShrink:0
+          }}>
+            <button className="custom-section-back" onClick={onGoToCustomSelector}
+              style={{ display:"inline-flex", alignItems:"center", gap:7, height:40 }}>
               <i className="ti ti-arrow-left"/>{t(ui.backToCategories,lang)}
             </button>
             {isFull && (
               allDone
-                ? <button className="custom-section-next" onClick={onGoToSummary}>
+                ? <button className="custom-section-next" onClick={onGoToSummary}
+                    style={{ display:"inline-flex", alignItems:"center", gap:8, height:40 }}>
                     {lang==='es'?'Ver mi menú':'See my menu'}<i className="ti ti-arrow-right"/>
                   </button>
                 : nextCatId && (
-                  <button className="custom-section-next" onClick={()=>onGoToNextCategory(nextCatId)}>
+                  <button className="custom-section-next" onClick={()=>onGoToNextCategory(nextCatId)}
+                    style={{ display:"inline-flex", alignItems:"center", gap:8, height:40 }}>
                     {lang==='es'?'Siguiente categoría':'Next category'}<i className="ti ti-arrow-right"/>
                   </button>
                 )
@@ -474,14 +482,16 @@ function CustomSummarySlide({ lang, clientName, selections }) {
     }}>
       <div className="grain" />
 
-      {/* LEFT 50% — circle centered */}
+      {/* LEFT 50% — circle centered, accounting for chrome bars */}
       <div style={{
         position:"absolute", top:0, left:0, width:"50%", height:"100%",
-        display:"flex", alignItems:"center", justifyContent:"center"
+        display:"flex", alignItems:"center", justifyContent:"center",
+        paddingTop:"56px", paddingBottom:"56px", boxSizing:"border-box"
       }}>
         <div style={{
-          width:"clamp(200px,26vw,340px)", height:"clamp(200px,26vw,340px)",
+          width:"clamp(200px,38vmin,400px)", height:"clamp(200px,38vmin,400px)",
           borderRadius:"50%", overflow:"hidden",
+          border:"1.5px solid rgba(42,40,32,0.18)",
           backgroundImage:`url(${heroUrl})`,
           backgroundSize:"cover", backgroundPosition:"center"
         }} />

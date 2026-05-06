@@ -300,3 +300,11 @@
 .menu-detail-title { margin: 0 0 32px 0; font-family: var(--serif); font-weight: 700; color: var(--buffet-ink); line-height: 1.1; text-transform: uppercase; }
 .menu-detail-title .first { display: block; font-size: clamp(32px, 3.6vw, 48px); letter-spacing: 0.12em; }
 .menu-detail-title .second { display: block; font-size: 0.6em; font-weight: 400; color: var(--buffet-bronze); letter-spacing: 0.22em; margin-top: 8px; }
+
+.menu-categories { display: flex; flex-direction: column; gap: 32px; }
+.menu-category { display: flex; flex-direction: column; gap: 12px; }
+.menu-category-title { margin: 0; font-family: var(--serif); font-size: clamp(20px, 2vw, 26px); color: var(--buffet-bronze); font-weight: 400; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid var(--buffet-line); padding-bottom: 8px; }
+.menu-category-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.menu-category-items li { display: flex; flex-direction: column; gap: 4px; }
+.menu-item-name { font-family: var(--sans); font-size: clamp(14px, 1.3vw, 16px); color: var(--buffet-ink); line-height: 1.3; }
+.menu-item-desc { margin: 0; font-family: var(--sans); font-size: clamp(12px, 1vw, 14px); color: var(--buffet-ink-soft); line-height: 1.4; font-style: italic; }

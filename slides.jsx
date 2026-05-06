@@ -262,9 +262,11 @@ function MenuContentSlide({ slide, lang }) {
 function CustomIntroSlide({ lang, clientName, setClientName, onContinue }) {
   const { ui } = window.DECK_CONTENT;
   return (
-    <div className="slide custom-intro-slide surface-paper">
+    <div className="slide custom-intro-slide surface-paper" style={{
+      backgroundImage: "url(_recursos/imagenes/03_Fondo_beige.jpg)",
+      backgroundSize: "cover", backgroundPosition: "center"
+    }}>
       <div className="grain" />
-      <div className="custom-intro-rings"><RingsCorner /></div>
       <div className="custom-intro-content">
         <div className="custom-intro-text-block">
           <div className="custom-intro-overline">{t(ui.customMenu,lang)}</div>
@@ -291,9 +293,11 @@ function CustomSelectorSlide({ slide, lang, onPickCategory, selections }) {
   const { customCategories } = window.DECK_CONTENT;
   const cats = slide.categories.map(id => customCategories[id]);
   return (
-    <div className="slide custom-selector-slide surface-paper">
+    <div className="slide custom-selector-slide surface-paper" style={{
+      backgroundImage: "url(_recursos/imagenes/03_Fondo_beige.jpg)",
+      backgroundSize: "cover", backgroundPosition: "center"
+    }}>
       <div className="grain" />
-      <div className="custom-selector-rings"><RingsCorner /></div>
       <div className="custom-selector-content">
         <header className="custom-selector-header">
           <div className="custom-selector-overline">Customized Menu</div>
@@ -343,7 +347,10 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
   };
 
   return (
-    <div className="slide custom-section-slide surface-paper">
+    <div className="slide custom-section-slide surface-paper" style={{
+      backgroundImage: "url(_recursos/imagenes/05_Fondo_beige_menu.jpg)",
+      backgroundSize: "cover", backgroundPosition: "center"
+    }}>
       <div className="grain" />
       <div className="custom-section-content">
 
@@ -414,11 +421,11 @@ function CustomSummarySlide({ lang, clientName, selections }) {
   const { customCategories } = window.DECK_CONTENT;
   const heroUrl = customCategories['comienzo'].hero;
   return (
-    <div className="slide custom-summary-slide surface-paper">
+    <div className="slide custom-summary-slide surface-paper" style={{
+      backgroundImage: "url(_recursos/imagenes/04_Fondo_beige_portada.jpg)",
+      backgroundSize: "cover", backgroundPosition: "center"
+    }}>
       <div className="grain" />
-      <div className="custom-summary-rings" style={{position:"absolute",inset:0,zIndex:1,pointerEvents:"none",overflow:"hidden"}}>
-        <RingsPanel count={14} base={90} step={16} />
-      </div>
       <div className="custom-summary-content">
         <div className="custom-summary-left">
           <div className="custom-summary-photo-circle" style={{backgroundImage:`url(${heroUrl})`}}/>

@@ -1,6 +1,21 @@
-// slides.jsx v6
+// slides.jsx v7 — hardcoded design tokens (proxy-proof)
 const { useState } = React;
 const t = (val, lang) => { if (!val) return ""; if (typeof val === "string") return val; return val[lang] ?? val.en ?? ""; };
+
+// ── Design tokens hardcoded (immune to CSS cache/proxy issues) ──
+const C = {
+  ink:       "#2a2820",
+  inkSoft:   "rgba(42,40,32,0.62)",
+  inkFaint:  "rgba(42,40,32,0.32)",
+  bronze:    "#8a7d50",
+  bronzeSoft:"#a59668",
+  paper:     "#e9e3d4",
+  olive:     "#2d3528",
+  line:      "rgba(42,40,32,0.20)",
+  onOlive:   "#d8d2bf",
+};
+const SERIF = "'Cormorant Garamond','Cormorant',Garamond,serif";
+const SANS  = "'DM Sans',ui-sans-serif,system-ui,-apple-system,sans-serif";
 
 // ── Rings — contained left panel (always centered) ────────────
 function RingsPanel({ count = 12, base = 90, step = 14 }) {
@@ -153,8 +168,9 @@ function MenuHeaderSlide({ slide, lang }) {
   const words = t(m.title,lang).split(" ");
   const first=words[0], second=words.slice(1).join(" ");
   return (
-    <div className="slide menu-header-slide surface-paper" style={{
+    <div className="slide menu-header-slide" style={{
       position:"relative",
+      backgroundColor: C.paper,
       backgroundImage:"url(_recursos/imagenes/04_Fondo_beige_portada.jpg)",
       backgroundSize:"cover", backgroundPosition:"center"
     }}>
@@ -179,13 +195,13 @@ function MenuHeaderSlide({ slide, lang }) {
         alignItems:"flex-start", justifyContent:"center",
         padding:"0 6vw"
       }}>
-        <div style={{fontFamily:"var(--sans)",fontSize:"10px",letterSpacing:"0.44em",fontWeight:700,textTransform:"uppercase",color:"var(--buffet-bronze)",marginBottom:18,opacity:0.8}}>Set Menu</div>
-        <h2 style={{margin:0,fontFamily:"var(--serif)",fontWeight:700,fontSize:"clamp(38px,4.8vw,72px)",lineHeight:1,letterSpacing:"0.12em",textTransform:"uppercase",color:"var(--buffet-ink)"}}>
+        <div style={{fontFamily:SANS,fontSize:"10px",letterSpacing:"0.44em",fontWeight:700,textTransform:"uppercase",color:C.bronze,marginBottom:18,opacity:0.8}}>Set Menu</div>
+        <h2 style={{margin:0,fontFamily:SERIF,fontWeight:700,fontSize:"clamp(38px,4.8vw,72px)",lineHeight:1,letterSpacing:"0.12em",textTransform:"uppercase",color:C.ink}}>
           <span style={{display:"block"}}>{first}</span>
-          {second && <span style={{display:"block",color:"var(--buffet-bronze)",fontWeight:400,fontSize:"0.72em",letterSpacing:"0.22em",marginTop:8}}>{second}</span>}
+          {second && <span style={{display:"block",color:C.bronze,fontWeight:400,fontSize:"0.72em",letterSpacing:"0.22em",marginTop:8}}>{second}</span>}
         </h2>
-        <div style={{width:48,height:2,background:"var(--buffet-bronze)",margin:"28px 0",borderRadius:2}} />
-        {m.subtitle && <p style={{margin:0,fontFamily:"var(--serif)",fontStyle:"italic",fontSize:"clamp(14px,1.5vw,20px)",color:"var(--buffet-ink-soft)",lineHeight:1.6}}>{t(m.subtitle,lang)}</p>}
+        <div style={{width:48,height:2,background:C.bronze,margin:"28px 0",borderRadius:2}} />
+        {m.subtitle && <p style={{margin:0,fontFamily:SERIF,fontStyle:"italic",fontSize:"clamp(14px,1.5vw,20px)",color:C.inkSoft,lineHeight:1.6}}>{t(m.subtitle,lang)}</p>}
       </div>
     </div>
   );

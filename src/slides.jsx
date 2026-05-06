@@ -175,12 +175,7 @@ function MenuHeaderSlide({ slide, lang }) {
     }}>
       <div className="grain" />
 
-      {/* Full-slide concentric rings */}
-      <div style={{ position:"absolute", inset:0, zIndex:1, pointerEvents:"none" }}>
-        <RingsCorner />
-      </div>
-
-      {/* Split title + circle photo */}
+      {/* Split title + circle photo — no SVG rings (background image already has lines) */}
       <div style={{
         position:"absolute", inset:0, zIndex:2,
         display:"flex", alignItems:"center", justifyContent:"center",
@@ -194,13 +189,12 @@ function MenuHeaderSlide({ slide, lang }) {
           color:C.bronze, whiteSpace:"nowrap", flex:1, textAlign:"center"
         }}>{first}</div>
 
-        {/* Circular photo */}
+        {/* Circular photo — no shadow */}
         <div style={{
           width:"clamp(260px,34vw,480px)", height:"clamp(260px,34vw,480px)",
           borderRadius:"50%", overflow:"hidden", flexShrink:0,
           backgroundImage:`url(${m.hero})`,
-          backgroundSize:"cover", backgroundPosition:"center",
-          boxShadow:"0 12px 40px -10px rgba(0,0,0,0.32)"
+          backgroundSize:"cover", backgroundPosition:"center"
         }} />
 
         {/* Right word — light muted */}
@@ -230,96 +224,76 @@ function MenuContentSlide({ slide, lang }) {
     }}>
       <div className="grain" />
 
-      {/* Full-slide concentric rings */}
-      <div style={{ position:"absolute", inset:0, zIndex:1, pointerEvents:"none" }}>
-        <RingsCorner />
+      {/* LEFT 50% — circle centered, no SVG rings */}
+      <div style={{
+        position:"absolute", top:0, left:0, width:"50%", height:"100%",
+        display:"flex", alignItems:"center", justifyContent:"center"
+      }}>
+        <div style={{
+          width:"clamp(200px,26vw,340px)", height:"clamp(200px,26vw,340px)",
+          borderRadius:"50%", overflow:"hidden",
+          backgroundImage:`url(${m.hero})`,
+          backgroundSize:"cover", backgroundPosition:"center"
+        }} />
       </div>
 
-      {/* Two-column grid */}
+      {/* RIGHT 50% — title + categories, starts at midpoint */}
       <div style={{
-        position:"absolute", inset:0, zIndex:2,
-        display:"grid",
-        gridTemplateColumns:"1fr 1.2fr",
-        alignItems:"center",
-        gap:"clamp(16px,2vw,40px)",
-        padding:"clamp(60px,8vh,100px) clamp(32px,4vw,64px) clamp(60px,8vh,100px) clamp(20px,2.5vw,44px)"
+        position:"absolute", top:0, left:"50%", right:0, bottom:0,
+        display:"flex", flexDirection:"column", justifyContent:"center",
+        overflowY:"auto",
+        padding:"clamp(56px,7vh,90px) clamp(28px,3vw,52px) clamp(56px,7vh,90px) clamp(16px,1.5vw,28px)",
+        boxSizing:"border-box"
       }}>
-
-        {/* LEFT: circular photo centered */}
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", height:"100%" }}>
-          <div style={{
-            width:"clamp(200px,26vw,360px)", height:"clamp(200px,26vw,360px)",
-            borderRadius:"50%", overflow:"hidden", flexShrink:0,
-            backgroundImage:`url(${m.hero})`,
-            backgroundSize:"cover", backgroundPosition:"center",
-            boxShadow:"0 12px 40px -10px rgba(0,0,0,0.30)"
-          }} />
+        {/* Title: MEXICAN bold | MORNING light */}
+        <div style={{ marginBottom:20, paddingBottom:16, borderBottom:`1px solid ${C.line}` }}>
+          <span style={{
+            fontFamily:SANS, fontWeight:700, fontSize:"clamp(15px,1.6vw,22px)",
+            letterSpacing:"0.40em", textTransform:"uppercase", color:C.bronze
+          }}>{first} </span>
+          {second && <span style={{
+            fontFamily:SANS, fontWeight:300, fontSize:"clamp(15px,1.6vw,22px)",
+            letterSpacing:"0.40em", textTransform:"uppercase", color:C.inkSoft
+          }}>{second}</span>}
         </div>
 
-        {/* RIGHT: title + categories */}
-        <div style={{
-          display:"flex", flexDirection:"column",
-          overflowY:"auto", maxHeight:"100%",
-          padding:"16px 0"
-        }}>
-          {/* Title: MEXICAN bold | MORNING light */}
-          <div style={{
-            marginBottom:20, paddingBottom:18,
-            borderBottom:`1px solid ${C.line}`
-          }}>
-            <span style={{
-              fontFamily:SANS, fontWeight:700,
-              fontSize:"clamp(16px,1.7vw,24px)",
-              letterSpacing:"0.40em", textTransform:"uppercase", color:C.bronze
-            }}>{first} </span>
-            {second && <span style={{
-              fontFamily:SANS, fontWeight:300,
-              fontSize:"clamp(16px,1.7vw,24px)",
-              letterSpacing:"0.40em", textTransform:"uppercase", color:C.inkSoft
-            }}>{second}</span>}
-          </div>
+        {/* Categories — unified style, no font switching between groups */}
+        <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+          {page.groups.map((grp, gi) => (
+            <div key={gi} style={{
+              paddingBottom: gi < page.groups.length-1 ? 14 : 0,
+              borderBottom: gi < page.groups.length-1 ? `1px solid rgba(42,40,32,0.08)` : "none"
+            }}>
+              {/* Category label — #61613C bold DM Sans */}
+              <div style={{
+                marginBottom:6, fontFamily:SANS, fontWeight:700,
+                fontSize:"clamp(9px,0.8vw,11px)", letterSpacing:"0.40em",
+                textTransform:"uppercase", color:C.bronze
+              }}>{t(grp.title, lang)}</div>
 
-          {/* Categories */}
-          <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
-            {page.groups.map((grp, gi) => (
-              <div key={gi} style={{
-                paddingBottom: gi < page.groups.length-1 ? 16 : 0,
-                borderBottom: gi < page.groups.length-1 ? `1px solid rgba(42,40,32,0.08)` : "none"
-              }}>
-                {/* Category label — PDF: #61613C, tracking 400, DM Sans bold */}
-                <div style={{
-                  marginBottom:6, fontFamily:SANS, fontWeight:700,
-                  fontSize:"clamp(9px,0.85vw,12px)", letterSpacing:"0.40em",
-                  textTransform:"uppercase", color:C.bronze
-                }}>{t(grp.title, lang)}</div>
-
-                {/* Items — PDF: #8D887D, tracking 25, interlineado 30 */}
-                <div style={{ display:"flex", flexDirection:"column", gap: grp.isHotKitchen ? 10 : 3 }}>
-                  {grp.items.map((item, ii) => (
-                    <div key={ii}>
-                      <div style={{ display:"inline-flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
-                        <span style={{
-                          fontFamily:SANS,
-                          fontSize:"clamp(11px,1.05vw,14px)",
-                          lineHeight:1.5,
-                          letterSpacing: grp.isHotKitchen ? "0.01em" : "0.06em",
-                          color: grp.isHotKitchen ? C.ink : C.bronzeSoft,
-                          fontWeight: grp.isHotKitchen ? 500 : 400
-                        }}>{t(item.label, lang)}</span>
-                        <DietMarks tags={item.tags} size={12} />
-                      </div>
-                      {grp.isHotKitchen && item.description && (
-                        <p style={{
-                          margin:"2px 0 0", fontFamily:SERIF, fontStyle:"italic",
-                          fontSize:"clamp(10px,0.9vw,12px)", color:C.inkFaint, lineHeight:1.5
-                        }}>{t(item.description, lang)}</p>
-                      )}
+              {/* Items — always #8D887D, consistent across all groups */}
+              <div style={{ display:"flex", flexDirection:"column", gap: grp.isHotKitchen ? 9 : 3 }}>
+                {grp.items.map((item, ii) => (
+                  <div key={ii}>
+                    <div style={{ display:"inline-flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
+                      <span style={{
+                        fontFamily:SANS, fontSize:"clamp(11px,1.05vw,14px)",
+                        lineHeight:1.5, letterSpacing:"0.05em",
+                        color:C.bronzeSoft, fontWeight:400
+                      }}>{t(item.label, lang)}</span>
+                      <DietMarks tags={item.tags} size={12} />
                     </div>
-                  ))}
-                </div>
+                    {grp.isHotKitchen && item.description && (
+                      <p style={{
+                        margin:"2px 0 0", fontFamily:SERIF, fontStyle:"italic",
+                        fontSize:"clamp(10px,0.88vw,12px)", color:C.inkFaint, lineHeight:1.5
+                      }}>{t(item.description, lang)}</p>
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -331,7 +305,7 @@ function CustomIntroSlide({ lang, clientName, setClientName, onContinue }) {
   const { ui } = window.DECK_CONTENT;
   return (
     <div className="slide custom-intro-slide surface-paper" style={{
-      backgroundImage: "url(_recursos/imagenes/03_Fondo_beige.jpg)",
+      backgroundImage: "url(_recursos/imagenes/04_Fondo_beige_portada.jpg)",
       backgroundSize: "cover", backgroundPosition: "center"
     }}>
       <div className="grain" />
@@ -484,54 +458,92 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
   );
 }
 
-// ── Custom Summary ────────────────────────────────────────────
+// ── Custom Summary — layout matches MenuContentSlide (circle left 50% / content right 50%)
 function CustomSummarySlide({ lang, clientName, selections }) {
   const { customCategories } = window.DECK_CONTENT;
-  const heroUrl = customCategories['comienzo'].hero;
+  // Use the hero from the first selected category, fallback to comienzo
+  const firstCatWithSelection = CAT_ORDER.find(id => (selections[id]||[]).length > 0);
+  const heroUrl = customCategories[firstCatWithSelection || 'comienzo'].hero;
+
   return (
-    <div className="slide custom-summary-slide surface-paper" style={{
-      backgroundImage: "url(_recursos/imagenes/04_Fondo_beige_portada.jpg)",
+    <div className="slide" style={{
+      backgroundColor: C.paper,
+      backgroundImage: "url(_recursos/imagenes/05_Fondo_beige_menu.jpg)",
       backgroundSize: "cover", backgroundPosition: "center"
     }}>
       <div className="grain" />
-      <div className="custom-summary-content">
-        <div className="custom-summary-left">
-          <div className="custom-summary-photo-circle" style={{backgroundImage:`url(${heroUrl})`}}/>
-        </div>
-        <div className="custom-summary-right">
-          <div className="custom-summary-overline">Customized Menu</div>
-          <h2 className="custom-summary-name">{clientName||'—'}</h2>
-          <div className="custom-summary-tagline">
-            {lang==='es'?'Tu menú personalizado':'Your personalized menu'}
-          </div>
-          <div className="custom-summary-divider"/>
-          <div className="custom-summary-categories">
-            {CAT_ORDER.map(catId => {
-              const cat=customCategories[catId];
-              const ids=selections[catId]||[];
-              const items=cat.items.filter(it=>ids.includes(it.id));
-              return (
-                <div key={catId} className="summary-cat-section">
-                  <div className="summary-cat-heading">{t(cat.title,lang)}</div>
-                  <ul className="summary-cat-items">
-                    {items.length
-                      ? items.map(it=>(
-                          <li key={it.id} className="summary-item-row">
-                            <span>{t(it.label,lang)}</span>
-                            <DietMarks tags={it.tags} size={12}/>
-                          </li>
-                        ))
-                      : <li className="empty">{lang==='es'?'Sin selección':'No selection'}</li>
-                    }
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+
+      {/* LEFT 50% — circle centered */}
+      <div style={{
+        position:"absolute", top:0, left:0, width:"50%", height:"100%",
+        display:"flex", alignItems:"center", justifyContent:"center"
+      }}>
+        <div style={{
+          width:"clamp(200px,26vw,340px)", height:"clamp(200px,26vw,340px)",
+          borderRadius:"50%", overflow:"hidden",
+          backgroundImage:`url(${heroUrl})`,
+          backgroundSize:"cover", backgroundPosition:"center"
+        }} />
       </div>
-      <div className="custom-summary-logo">
-        <img src="_recursos/SVG/MP_THG_PUNTACANA_White.svg" alt="Moon Palace" className="summary-logo-img"/>
+
+      {/* RIGHT 50% — client name + categories */}
+      <div style={{
+        position:"absolute", top:0, left:"50%", right:0, bottom:0,
+        display:"flex", flexDirection:"column", justifyContent:"center",
+        overflowY:"auto",
+        padding:"clamp(56px,7vh,90px) clamp(28px,3vw,52px) clamp(56px,7vh,90px) clamp(16px,1.5vw,28px)",
+        boxSizing:"border-box"
+      }}>
+        {/* Header */}
+        <div style={{ marginBottom:20, paddingBottom:16, borderBottom:`1px solid ${C.line}` }}>
+          <div style={{
+            fontFamily:SANS, fontSize:"clamp(9px,0.8vw,11px)",
+            fontWeight:700, letterSpacing:"0.44em",
+            textTransform:"uppercase", color:C.bronze, marginBottom:6
+          }}>{lang==='es'?'Menú Personalizado':'Customized Menu'}</div>
+          <div style={{
+            fontFamily:SANS, fontWeight:700, fontSize:"clamp(16px,1.8vw,24px)",
+            letterSpacing:"0.12em", color:C.ink
+          }}>{clientName||'—'}</div>
+        </div>
+
+        {/* Categories */}
+        <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+          {CAT_ORDER.map((catId, gi, arr) => {
+            const cat=customCategories[catId];
+            const ids=selections[catId]||[];
+            const items=cat.items.filter(it=>ids.includes(it.id));
+            return (
+              <div key={catId} style={{
+                paddingBottom: gi < arr.length-1 ? 12 : 0,
+                borderBottom: gi < arr.length-1 ? `1px solid rgba(42,40,32,0.08)` : "none"
+              }}>
+                <div style={{
+                  marginBottom:5, fontFamily:SANS, fontWeight:700,
+                  fontSize:"clamp(9px,0.8vw,11px)", letterSpacing:"0.40em",
+                  textTransform:"uppercase", color:C.bronze
+                }}>{t(cat.title,lang)}</div>
+                <div style={{ display:"flex", flexDirection:"column", gap:3 }}>
+                  {items.length
+                    ? items.map(it=>(
+                        <div key={it.id} style={{ display:"inline-flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
+                          <span style={{
+                            fontFamily:SANS, fontSize:"clamp(11px,1.05vw,14px)",
+                            lineHeight:1.5, letterSpacing:"0.05em",
+                            color:C.bronzeSoft, fontWeight:400
+                          }}>{t(it.label,lang)}</span>
+                          <DietMarks tags={it.tags} size={12}/>
+                        </div>
+                      ))
+                    : <span style={{ fontFamily:SANS, fontSize:"clamp(10px,0.9vw,12px)", color:C.inkFaint, fontStyle:"italic" }}>
+                        {lang==='es'?'Sin selección':'No selection'}
+                      </span>
+                  }
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

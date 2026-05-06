@@ -32,7 +32,7 @@ export const DECK_CONTENT = {
       hero: "assets/img/02_mexican_morning.webp",
       slideImg: "assets/img/03_mexican_morning_slide_1.webp",
       hasNuts: true,
-      // pages[0] → jugos + fruta
+      // pages[0] → jugos + fruta + panadería
       pages: [
         {
           groups: [
@@ -51,11 +51,6 @@ export const DECK_CONTENT = {
                 { label: { es: "Melón chino", en: "Cantaloupe" }, tags: ["vegan","vegetarian"] },
               ],
             },
-          ],
-        },
-        // pages[1] → panadería + nuestra selección
-        {
-          groups: [
             {
               title: { es: "Panadería", en: "Bakery" },
               items: [
@@ -64,6 +59,11 @@ export const DECK_CONTENT = {
                 { label: { es: "Rollo de canela", en: "Cinnamon roll" }, tags: ["vegetarian","nueces"] },
               ],
             },
+          ],
+        },
+        // pages[1] → nuestra selección
+        {
+          groups: [
             {
               title: { es: "Nuestra Selección", en: "Our Selection" },
               isHotKitchen: true,
@@ -106,10 +106,6 @@ export const DECK_CONTENT = {
                 { label: { es: "Toronja",     en: "Grapefruit"  }, tags: ["vegan","vegetarian"] },
               ],
             },
-          ],
-        },
-        {
-          groups: [
             {
               title: { es: "Panadería", en: "Bakery" },
               items: [
@@ -118,6 +114,10 @@ export const DECK_CONTENT = {
                 { label: { es: "Concha",                 en: "Concha"              }, tags: ["vegetarian"] },
               ],
             },
+          ],
+        },
+        {
+          groups: [
             {
               title: { es: "Nuestra Selección", en: "Our Selection" },
               isHotKitchen: true,

@@ -7,8 +7,8 @@ const C = {
   ink:       "#2a2820",
   inkSoft:   "rgba(42,40,32,0.62)",
   inkFaint:  "rgba(42,40,32,0.32)",
-  bronze:    "#8a7d50",
-  bronzeSoft:"#a59668",
+  bronze:    "#61613C",   // Fuentes.pdf — editorial dark (títulos, categorías)
+  bronzeSoft:"#8D887D",  // Fuentes.pdf — editorial muted (items, leyenda)
   paper:     "#e9e3d4",
   olive:     "#2d3528",
   line:      "rgba(42,40,32,0.20)",
@@ -174,33 +174,42 @@ function MenuHeaderSlide({ slide, lang }) {
       backgroundSize:"cover", backgroundPosition:"center"
     }}>
       <div className="grain" />
-      {/* Left 50% Hero Image */}
-      <div style={{
-        position:"absolute", top:0, left:0, width:"50%", height:"100%",
-        backgroundImage:`url(${m.hero})`,
-        backgroundSize:"cover", backgroundPosition:"center",
-        filter:"saturate(0.85) brightness(0.88)"
-      }} />
-      <div style={{
-        position:"absolute", top:0, left:"40%", width:"15%", height:"100%",
-        background:"linear-gradient(to right, rgba(0,0,0,0.14) 0%, transparent 100%)",
-        pointerEvents:"none"
-      }} />
 
-      {/* Right 50% Text */}
+      {/* Full-slide concentric rings */}
+      <div style={{ position:"absolute", inset:0, zIndex:1, pointerEvents:"none" }}>
+        <RingsCorner />
+      </div>
+
+      {/* Split title + circle photo */}
       <div style={{
-        position:"absolute", top:0, left:"50%", right:0, bottom:0,
-        display:"flex", flexDirection:"column",
-        alignItems:"flex-start", justifyContent:"center",
-        padding:"0 6vw"
+        position:"absolute", inset:0, zIndex:2,
+        display:"flex", alignItems:"center", justifyContent:"center",
+        gap:"clamp(32px,4vw,72px)", padding:"0 8vw"
       }}>
-        <div style={{fontFamily:SANS,fontSize:"10px",letterSpacing:"0.44em",fontWeight:700,textTransform:"uppercase",color:C.bronze,marginBottom:18,opacity:0.8}}>Set Menu</div>
-        <h2 style={{margin:0,fontFamily:SERIF,fontWeight:700,fontSize:"clamp(38px,4.8vw,72px)",lineHeight:1,letterSpacing:"0.12em",textTransform:"uppercase",color:C.ink}}>
-          <span style={{display:"block"}}>{first}</span>
-          {second && <span style={{display:"block",color:C.bronze,fontWeight:400,fontSize:"0.72em",letterSpacing:"0.22em",marginTop:8}}>{second}</span>}
-        </h2>
-        <div style={{width:48,height:2,background:C.bronze,margin:"28px 0",borderRadius:2}} />
-        {m.subtitle && <p style={{margin:0,fontFamily:SERIF,fontStyle:"italic",fontSize:"clamp(14px,1.5vw,20px)",color:C.inkSoft,lineHeight:1.6}}>{t(m.subtitle,lang)}</p>}
+        {/* Left word — bold olive */}
+        <div style={{
+          fontFamily:SANS, fontWeight:700,
+          fontSize:"clamp(18px,2.2vw,30px)",
+          letterSpacing:"0.42em", textTransform:"uppercase",
+          color:C.bronze, whiteSpace:"nowrap", flex:1, textAlign:"center"
+        }}>{first}</div>
+
+        {/* Circular photo */}
+        <div style={{
+          width:"clamp(260px,34vw,480px)", height:"clamp(260px,34vw,480px)",
+          borderRadius:"50%", overflow:"hidden", flexShrink:0,
+          backgroundImage:`url(${m.hero})`,
+          backgroundSize:"cover", backgroundPosition:"center",
+          boxShadow:"0 12px 40px -10px rgba(0,0,0,0.32)"
+        }} />
+
+        {/* Right word — light muted */}
+        <div style={{
+          fontFamily:SANS, fontWeight:300,
+          fontSize:"clamp(18px,2.2vw,30px)",
+          letterSpacing:"0.42em", textTransform:"uppercase",
+          color:C.inkSoft, whiteSpace:"nowrap", flex:1, textAlign:"center"
+        }}>{second}</div>
       </div>
     </div>
   );
@@ -210,8 +219,8 @@ function MenuHeaderSlide({ slide, lang }) {
 function MenuContentSlide({ slide, lang }) {
   const m    = window.DECK_CONTENT.menus[slide.menuId];
   const page = m.pages[slide.pageIndex];
-  const titleWords = t(m.title,lang).split(" ");
-  const first=titleWords[0], second=titleWords.slice(1).join(" ");
+  const words = t(m.title,lang).split(" ");
+  const first=words[0], second=words.slice(1).join(" ");
 
   return (
     <div className="slide" style={{
@@ -221,80 +230,96 @@ function MenuContentSlide({ slide, lang }) {
     }}>
       <div className="grain" />
 
-      {/* Left 50%: hero photo */}
-      <div style={{
-        position:"absolute", top:0, left:0, width:"50%", height:"100%",
-        backgroundImage:`url(${m.hero})`,
-        backgroundSize:"cover", backgroundPosition:"center",
-        filter:"saturate(0.85) brightness(0.88)"
-      }} />
-      {/* Gradient edge */}
-      <div style={{
-        position:"absolute", top:0, left:"40%", width:"15%", height:"100%",
-        background:"linear-gradient(to right, rgba(0,0,0,0.14) 0%, transparent 100%)",
-        pointerEvents:"none"
-      }} />
+      {/* Full-slide concentric rings */}
+      <div style={{ position:"absolute", inset:0, zIndex:1, pointerEvents:"none" }}>
+        <RingsCorner />
+      </div>
 
-      {/* Right 50%: content — flex-start avoids justify-center overflow bug */}
+      {/* Two-column grid */}
       <div style={{
-        position:"absolute", top:0, left:"50%", right:0, bottom:0,
-        overflowY:"auto",
-        padding:"clamp(60px,8vh,100px) clamp(24px,3.5vw,52px) 80px",
-        display:"flex", flexDirection:"column", justifyContent:"flex-start",
-        boxSizing:"border-box"
+        position:"absolute", inset:0, zIndex:2,
+        display:"grid",
+        gridTemplateColumns:"1fr 1.2fr",
+        alignItems:"center",
+        gap:"clamp(16px,2vw,40px)",
+        padding:"clamp(60px,8vh,100px) clamp(32px,4vw,64px) clamp(60px,8vh,100px) clamp(20px,2.5vw,44px)"
       }}>
-        {/* Title */}
-        <h2 style={{
-          margin:"0 0 20px", fontFamily:SERIF, fontWeight:400,
-          fontSize:"clamp(18px,2vw,28px)", letterSpacing:"0.28em",
-          textTransform:"uppercase", lineHeight:1.25,
-          paddingBottom:20,
-          borderBottom:`1px solid ${C.line}`
+
+        {/* LEFT: circular photo centered */}
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", height:"100%" }}>
+          <div style={{
+            width:"clamp(200px,26vw,360px)", height:"clamp(200px,26vw,360px)",
+            borderRadius:"50%", overflow:"hidden", flexShrink:0,
+            backgroundImage:`url(${m.hero})`,
+            backgroundSize:"cover", backgroundPosition:"center",
+            boxShadow:"0 12px 40px -10px rgba(0,0,0,0.30)"
+          }} />
+        </div>
+
+        {/* RIGHT: title + categories */}
+        <div style={{
+          display:"flex", flexDirection:"column",
+          overflowY:"auto", maxHeight:"100%",
+          padding:"16px 0"
         }}>
-          <span style={{color:C.bronze}}>{first}</span>
-          {second && <span style={{color:C.inkSoft}}> {second}</span>}
-        </h2>
+          {/* Title: MEXICAN bold | MORNING light */}
+          <div style={{
+            marginBottom:20, paddingBottom:18,
+            borderBottom:`1px solid ${C.line}`
+          }}>
+            <span style={{
+              fontFamily:SANS, fontWeight:700,
+              fontSize:"clamp(16px,1.7vw,24px)",
+              letterSpacing:"0.40em", textTransform:"uppercase", color:C.bronze
+            }}>{first} </span>
+            {second && <span style={{
+              fontFamily:SANS, fontWeight:300,
+              fontSize:"clamp(16px,1.7vw,24px)",
+              letterSpacing:"0.40em", textTransform:"uppercase", color:C.inkSoft
+            }}>{second}</span>}
+          </div>
 
-        {/* Categories */}
-        <div style={{display:"flex", flexDirection:"column", gap:20}}>
-          {page.groups.map((grp, gi) => (
-            <div key={gi} style={{
-              paddingBottom: gi < page.groups.length-1 ? 18 : 0,
-              borderBottom: gi < page.groups.length-1 ? `1px solid rgba(42,40,32,0.10)` : "none"
-            }}>
-              {/* Category heading */}
-              <div style={{
-                marginBottom:8, fontFamily:SERIF, fontWeight:500,
-                fontSize:"clamp(16px,1.8vw,24px)", letterSpacing:"0.32em",
-                textTransform:"uppercase", color:C.bronze
-              }}>{t(grp.title, lang)}</div>
+          {/* Categories */}
+          <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
+            {page.groups.map((grp, gi) => (
+              <div key={gi} style={{
+                paddingBottom: gi < page.groups.length-1 ? 16 : 0,
+                borderBottom: gi < page.groups.length-1 ? `1px solid rgba(42,40,32,0.08)` : "none"
+              }}>
+                {/* Category label — PDF: #61613C, tracking 400, DM Sans bold */}
+                <div style={{
+                  marginBottom:6, fontFamily:SANS, fontWeight:700,
+                  fontSize:"clamp(9px,0.85vw,12px)", letterSpacing:"0.40em",
+                  textTransform:"uppercase", color:C.bronze
+                }}>{t(grp.title, lang)}</div>
 
-              {/* Items */}
-              <div style={{display:"flex", flexDirection:"column", gap: grp.isHotKitchen ? 10 : 3}}>
-                {grp.items.map((item, ii) => (
-                  <div key={ii}>
-                    <div style={{display:"inline-flex", alignItems:"center", gap:6, flexWrap:"wrap"}}>
-                      <span style={{
-                        fontFamily:SANS, fontSize:"clamp(11px,1.1vw,14px)",
-                        lineHeight:1.55, color: grp.isHotKitchen ? C.ink : C.inkSoft,
-                        letterSpacing: grp.isHotKitchen ? "0.02em" : "0.08em",
-                        textTransform: grp.isHotKitchen ? "none" : "uppercase",
-                        fontWeight: grp.isHotKitchen ? 400 : 500
-                      }}>{t(item.label, lang)}</span>
-                      <DietMarks tags={item.tags} size={12} />
+                {/* Items — PDF: #8D887D, tracking 25, interlineado 30 */}
+                <div style={{ display:"flex", flexDirection:"column", gap: grp.isHotKitchen ? 10 : 3 }}>
+                  {grp.items.map((item, ii) => (
+                    <div key={ii}>
+                      <div style={{ display:"inline-flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
+                        <span style={{
+                          fontFamily:SANS,
+                          fontSize:"clamp(11px,1.05vw,14px)",
+                          lineHeight:1.5,
+                          letterSpacing: grp.isHotKitchen ? "0.01em" : "0.06em",
+                          color: grp.isHotKitchen ? C.ink : C.bronzeSoft,
+                          fontWeight: grp.isHotKitchen ? 500 : 400
+                        }}>{t(item.label, lang)}</span>
+                        <DietMarks tags={item.tags} size={12} />
+                      </div>
+                      {grp.isHotKitchen && item.description && (
+                        <p style={{
+                          margin:"2px 0 0", fontFamily:SERIF, fontStyle:"italic",
+                          fontSize:"clamp(10px,0.9vw,12px)", color:C.inkFaint, lineHeight:1.5
+                        }}>{t(item.description, lang)}</p>
+                      )}
                     </div>
-                    {grp.isHotKitchen && item.description && (
-                      <p style={{
-                        margin:"2px 0 0", fontFamily:SERIF, fontStyle:"italic",
-                        fontSize:"clamp(11px,1vw,13px)", color:C.inkFaint,
-                        lineHeight:1.5
-                      }}>{t(item.description, lang)}</p>
-                    )}
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -230,10 +230,10 @@ function App() {
           {canArrow && (
             <>
               <button className="nav-btn" onClick={arrowPrev} disabled={prevDisabled} aria-label="Previous">
-                <i className="ti ti-arrow-left" aria-hidden="true"/>&#8592;
+                <i className="ti ti-arrow-left" />
               </button>
               <button className="nav-btn" onClick={arrowNext} disabled={nextDisabled} aria-label="Next">
-                <i className="ti ti-arrow-right" aria-hidden="true"/>&#8594;
+                <i className="ti ti-arrow-right" />
               </button>
             </>
           )}

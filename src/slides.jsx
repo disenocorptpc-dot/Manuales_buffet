@@ -224,10 +224,11 @@ function MenuContentSlide({ slide, lang }) {
     }}>
       <div className="grain" />
 
-      {/* LEFT 50% — circle centered, no SVG rings */}
+      {/* LEFT 50% — circle centered, accounting for chrome bars */}
       <div style={{
         position:"absolute", top:0, left:0, width:"50%", height:"100%",
-        display:"flex", alignItems:"center", justifyContent:"center"
+        display:"flex", alignItems:"center", justifyContent:"center",
+        paddingTop:"56px", paddingBottom:"56px", boxSizing:"border-box"
       }}>
         <div style={{
           width:"clamp(200px,38vmin,400px)", height:"clamp(200px,38vmin,400px)",
@@ -285,7 +286,7 @@ function MenuContentSlide({ slide, lang }) {
                     </div>
                     {grp.isHotKitchen && item.description && (
                       <p style={{
-                        margin:"2px 0 0", fontFamily:SANS, fontWeight:600,
+                        margin:"2px 0 0", fontFamily:SANS, fontWeight:600, fontStyle:"italic",
                         fontSize:"clamp(11px,0.95vw,13px)", color:C.inkSoft, lineHeight:1.5
                       }}>{t(item.description, lang)}</p>
                     )}

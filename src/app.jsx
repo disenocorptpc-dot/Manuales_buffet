@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 
 // group:"cover"    → only → arrow
@@ -132,11 +132,28 @@ function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, [editMode, arrowNext, arrowPrev, goHome]);
 
+  // ── Touch swipe (iPad) ───────────────────────────────────────
+  const touchStart = useRef(null);
+  const onTouchStart = useCallback(e => {
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, []);
+  const onTouchEnd = useCallback(e => {
+    if (!touchStart.current) return;
+    const dx = e.changedTouches[0].clientX - touchStart.current.x;
+    const dy = e.changedTouches[0].clientY - touchStart.current.y;
+    touchStart.current = null;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.2) return; // too short or mostly vertical
+    if (dx < 0) arrowNext(); else arrowPrev();
+  }, [arrowNext, arrowPrev]);
+
   const chromeOnOlive = window.SLIDE_IS_OLIVE ? window.SLIDE_IS_OLIVE(slide) : false;
 
   const viewer = (
     <div className="app" data-screen-label={`${String(idx+1).padStart(2,'0')} ${slide.id}`}>
-      <main className="stage">
+      <main className="stage"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
         <Slide slide={slide} lang={lang}
           onPickMenu={onPickMenu}
           onGoToSelector={goSetMenus}
@@ -213,10 +230,10 @@ function App() {
           {canArrow && (
             <>
               <button className="nav-btn" onClick={arrowPrev} disabled={prevDisabled} aria-label="Previous">
-                <i className="ti ti-arrow-left"/>
+                <i className="ti ti-arrow-left" aria-hidden="true"/>&#8592;
               </button>
               <button className="nav-btn" onClick={arrowNext} disabled={nextDisabled} aria-label="Next">
-                <i className="ti ti-arrow-right"/>
+                <i className="ti ti-arrow-right" aria-hidden="true"/>&#8594;
               </button>
             </>
           )}

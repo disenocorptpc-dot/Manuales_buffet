@@ -230,7 +230,7 @@ function MenuContentSlide({ slide, lang }) {
         display:"flex", alignItems:"center", justifyContent:"center"
       }}>
         <div style={{
-          width:"clamp(200px,26vw,340px)", height:"clamp(200px,26vw,340px)",
+          width:"clamp(200px,38vmin,400px)", height:"clamp(200px,38vmin,400px)",
           borderRadius:"50%", overflow:"hidden",
           backgroundImage:`url(${m.hero})`,
           backgroundSize:"cover", backgroundPosition:"center"
@@ -266,27 +266,27 @@ function MenuContentSlide({ slide, lang }) {
             }}>
               {/* Category label — #61613C bold DM Sans */}
               <div style={{
-                marginBottom:6, fontFamily:SANS, fontWeight:700,
-                fontSize:"clamp(9px,0.8vw,11px)", letterSpacing:"0.40em",
+                marginBottom:8, fontFamily:SANS, fontWeight:700,
+                fontSize:"clamp(10px,1.0vw,13px)", letterSpacing:"0.38em",
                 textTransform:"uppercase", color:C.bronze
               }}>{t(grp.title, lang)}</div>
 
               {/* Items — always #8D887D, consistent across all groups */}
-              <div style={{ display:"flex", flexDirection:"column", gap: grp.isHotKitchen ? 9 : 3 }}>
+              <div style={{ display:"flex", flexDirection:"column", gap: grp.isHotKitchen ? 10 : 5 }}>
                 {grp.items.map((item, ii) => (
                   <div key={ii}>
                     <div style={{ display:"inline-flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
                       <span style={{
-                        fontFamily:SANS, fontSize:"clamp(11px,1.05vw,14px)",
-                        lineHeight:1.5, letterSpacing:"0.05em",
-                        color:C.bronzeSoft, fontWeight:400
+                        fontFamily:SANS, fontSize:"clamp(12px,1.15vw,15px)",
+                        lineHeight:1.5, letterSpacing:"0.04em",
+                        color:C.bronzeSoft, fontWeight:500
                       }}>{t(item.label, lang)}</span>
-                      <DietMarks tags={item.tags} size={12} />
+                      <DietMarks tags={item.tags} size={13} />
                     </div>
                     {grp.isHotKitchen && item.description && (
                       <p style={{
-                        margin:"2px 0 0", fontFamily:SERIF, fontStyle:"italic",
-                        fontSize:"clamp(10px,0.88vw,12px)", color:C.inkFaint, lineHeight:1.5
+                        margin:"2px 0 0", fontFamily:SANS, fontWeight:600,
+                        fontSize:"clamp(11px,0.95vw,13px)", color:C.inkSoft, lineHeight:1.5
                       }}>{t(item.description, lang)}</p>
                     )}
                   </div>

@@ -1,0 +1,1 @@
+const puppeteer = require('puppeteer'); (async () => { const browser = await puppeteer.launch(); const page = await browser.newPage(); await page.goto('https://manuales-buffet.pages.dev/?v=15#/3/en', {waitUntil: 'networkidle0'}); const html = await page.evaluate(() => document.querySelector('h2').outerHTML); console.log(html); await browser.close(); })();

@@ -29,7 +29,7 @@ window.DECK_CONTENT = {
     "mexican-morning": {
       title:    { es: "Mexican Morning",                       en: "Mexican Morning" },
       subtitle: { es: "Sabores tradicionales del amanecer mexicano", en: "Traditional flavors from the Mexican sunrise" },
-      hero: "assets/img/02_mexican_morning.webp",
+      hero: "assets/img/02_mexican_morning_v2.webp",
       slideImg: "assets/img/03_mexican_morning_slide_1.webp",
       hasNuts: true,
       // pages[0] → jugos + fruta
@@ -85,7 +85,7 @@ window.DECK_CONTENT = {
     "classic-american": {
       title:    { es: "Tradicional Americano", en: "Classic American" },
       subtitle: { es: "El desayuno americano clásico, reinventado", en: "The classic American breakfast, reimagined" },
-      hero: "assets/img/08_desayuno_americano.webp",
+      hero: "assets/img/08_desayuno_americano_v2.webp",
       slideImg: "assets/img/05_desayuno_americano.webp",
       hasNuts: true,
       pages: [

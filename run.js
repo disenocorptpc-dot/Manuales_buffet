@@ -1,0 +1,1 @@
+const puppeteer = require('puppeteer'); (async () => { const browser = await puppeteer.launch(); const page = await browser.newPage(); await page.goto('https://manuales-buffet.pages.dev/?v=15#/3/en', {waitUntil: 'networkidle0'}); await page.screenshot({path: 'check.png'}); await browser.close(); })();

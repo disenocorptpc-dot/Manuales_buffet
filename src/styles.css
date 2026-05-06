@@ -389,3 +389,19 @@
   display: inline-flex !important;
   align-items: center !important;
 }
+
+/* ── Fix botones footer custom-section alineados al centro ── */
+.custom-section-back,
+.custom-section-next {
+  align-self: center !important;
+  vertical-align: middle !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}

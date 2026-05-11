@@ -59,6 +59,10 @@ function App() {
     const i = deck.findIndex(s => s.type==='selector'); if (i>=0) goTo(i);
   }, [deck, goTo]);
 
+  const goMenu = useCallback(() => {
+    const i = deck.findIndex(s => s.type==='section'); if (i>=0) goTo(i);
+  }, [deck, goTo]);
+
   const goCustomMenu = useCallback(() => {
     const i = deck.findIndex(s => s.type==='customIntro'); if (i>=0) goTo(i);
   }, [deck, goTo]);
@@ -171,7 +175,7 @@ function App() {
           <button className="chrome-link" onClick={goHome}>
             <i className="ti ti-home"/>{t(ui.home,lang)}
           </button>
-          <button className="chrome-link" onClick={goSetMenus}>{t(ui.setMenus,lang)}</button>
+          <button className="chrome-link" onClick={goMenu}>{t(ui.menu,lang)}</button>
           {isCustomFlow && (
             <button className="chrome-link" onClick={goCustomSelector}>
               <i className="ti ti-layout-grid"/>{t(ui.customMenu,lang)}

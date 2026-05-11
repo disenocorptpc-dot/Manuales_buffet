@@ -449,9 +449,20 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
                     <span className={`custom-item-check ${sel?'is-checked':''}`}>
                       {sel ? <i className="ti ti-check"/> : null}
                     </span>
-                    <span className="custom-item-label-wrap">
-                      <span className="custom-item-label">{t(item.label,lang)}</span>
-                      <DietMarks tags={item.tags} size={14} />
+                    <span className="custom-item-label-wrap" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+                        <span className="custom-item-label">{t(item.label,lang)}</span>
+                        <DietMarks tags={item.tags} size={14} />
+                      </span>
+                      {item.description && (
+                        <span style={{
+                          fontFamily: 'var(--sans)', fontWeight: 500, fontStyle: "italic",
+                          fontSize: "clamp(10px, 0.9vw, 12px)", color: "var(--buffet-ink-soft)",
+                          lineHeight: 1.3, textAlign: 'left', marginTop: 1
+                        }}>
+                          {t(item.description, lang)}
+                        </span>
+                      )}
                     </span>
                   </button>
                 </li>
@@ -468,19 +479,17 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
               style={{ display:"inline-flex", alignItems:"center", gap:7, height:40 }}>
               <i className="ti ti-arrow-left"/>{t(ui.backToCategories,lang)}
             </button>
-            {isFull && (
-              allDone
-                ? <button className="custom-section-next" onClick={onGoToSummary}
-                    style={{ display:"inline-flex", alignItems:"center", gap:8, height:40 }}>
-                    {lang==='es'?'Ver mi menú':'See my menu'}<i className="ti ti-arrow-right"/>
-                  </button>
-                : nextCatId && (
-                  <button className="custom-section-next" onClick={()=>onGoToNextCategory(nextCatId)}
-                    style={{ display:"inline-flex", alignItems:"center", gap:8, height:40 }}>
-                    {lang==='es'?'Siguiente categoría':'Next category'}<i className="ti ti-arrow-right"/>
-                  </button>
-                )
-            )}
+            {allDone ? (
+              <button className="custom-section-next" onClick={onGoToSummary}
+                style={{ display:"inline-flex", alignItems:"center", gap:8, height:40 }}>
+                {lang==='es'?'Ver mi menú':'See my menu'}<i className="ti ti-arrow-right"/>
+              </button>
+            ) : nextCatId ? (
+              <button className="custom-section-next" onClick={()=>onGoToNextCategory(nextCatId)}
+                style={{ display:"inline-flex", alignItems:"center", gap:8, height:40 }}>
+                {lang==='es'?'Siguiente categoría':'Next category'}<i className="ti ti-arrow-right"/>
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
@@ -623,8 +632,7 @@ function CustomSummarySlide({ lang, clientName, selections }) {
     </div>
 
     {/* NATIVE PRINT LAYOUT (Visible only during printing via @media print) */}
-    <div className="print-only">
-      <img className="print-bg" src="_recursos/imagenes/05_Fondo_beige_menu.jpg" alt="" />
+    <div className="print-only" style={{ backgroundImage: "url('_recursos/imagenes/05_Fondo_beige_menu.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
       <div className="print-page">
         <div className="print-hero-container">
           <div className="print-hero-circle" style={{ backgroundImage: `url(${heroUrl})` }} />

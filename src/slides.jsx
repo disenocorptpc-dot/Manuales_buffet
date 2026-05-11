@@ -657,6 +657,10 @@ function CustomSummarySlide({ lang, clientName, selections }) {
             );
           })}
         </div>
+        
+        <div className="print-footer-logo">
+          <img src="_recursos/SVG/MP_THG_PUNTACANA_White.svg" alt="Moon Palace Punta Cana" style={{ width: "100%", height: "auto" }} />
+        </div>
       </div>
     </div>
     </>

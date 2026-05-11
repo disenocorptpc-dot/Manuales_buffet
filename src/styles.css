@@ -555,4 +555,14 @@
     color: #524f42; /* C.bronzeSoft */
     font-weight: 400;
   }
+
+  .print-footer-logo {
+    margin-top: auto; /* Pushes to bottom of flex container */
+    padding-top: 0.3in;
+    width: 2in;
+    display: flex;
+    justify-content: center;
+    opacity: 0.4;
+    filter: invert(1); /* White logo turns black */
+  }
 }

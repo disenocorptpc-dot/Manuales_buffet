@@ -439,7 +439,6 @@
     width: 8.5in;
     height: 11in; /* Force exactly one page */
     overflow: hidden;
-    background: transparent !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -483,9 +482,9 @@
 
   .print-header {
     text-align: center;
-    margin-bottom: 0.15in;
+    margin-bottom: 0.1in;
     border-bottom: 1px solid rgba(42,40,32,0.1);
-    padding-bottom: 0.15in;
+    padding-bottom: 0.1in;
     width: 90%;
   }
 
@@ -518,7 +517,7 @@
   .print-categories {
     display: flex;
     flex-direction: column;
-    gap: 0.15in;
+    gap: 0.1in;
     width: 85%;
     text-align: center;
   }
@@ -533,11 +532,20 @@
     margin-bottom: 6px;
   }
 
-  .print-cat-items {
+  .print-cat-groups {
     display: flex;
     flex-direction: column;
     gap: 4px;
     align-items: center;
+    width: 100%;
+  }
+
+  .print-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    width: 100%;
   }
 
   .print-item {

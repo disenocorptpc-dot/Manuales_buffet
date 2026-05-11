@@ -472,8 +472,8 @@
   }
 
   .print-hero-circle {
-    width: 2.5in; /* Slightly smaller again */
-    height: 2.5in;
+    width: 2.0in; /* Even smaller to fit content */
+    height: 2.0in;
     border-radius: 50%;
     background-size: cover;
     background-position: center;
@@ -501,7 +501,7 @@
   .print-title {
     font-family: 'DM Sans', sans-serif;
     font-weight: 700;
-    font-size: 18pt; /* Slightly smaller */
+    font-size: 18pt; /* Normal size */
     letter-spacing: 0.12em;
     color: #2a2820; /* C.ink */
     margin-bottom: 4px;
@@ -517,7 +517,7 @@
   .print-categories {
     display: flex;
     flex-direction: column;
-    gap: 0.1in;
+    gap: 0.08in;
     width: 85%;
     text-align: center;
   }
@@ -525,7 +525,7 @@
   .print-cat-title {
     font-family: 'DM Sans', sans-serif;
     font-weight: 700;
-    font-size: 8pt;
+    font-size: 9pt;
     letter-spacing: 0.40em;
     text-transform: uppercase;
     color: #b18843;
@@ -558,7 +558,7 @@
 
   .print-item-label {
     font-family: 'DM Sans', sans-serif;
-    font-size: 10pt; /* Slightly smaller to ensure fit */
+    font-size: 10pt; /* Back to normal */
     letter-spacing: 0.05em;
     color: #524f42; /* C.bronzeSoft */
     font-weight: 400;
@@ -569,7 +569,7 @@
     bottom: 0.2in; /* Moved closer to the bottom edge */
     left: 50%;
     transform: translateX(-50%);
-    width: 1.8in;
+    width: 1.5in;
     display: flex;
     justify-content: center;
     opacity: 0.4;

@@ -216,6 +216,10 @@ function MenuContentSlide({ slide, lang }) {
   const words = t(m.title,lang).split(" ");
   const first=words[0], second=words.slice(1).join(" ");
 
+  const allTagsInSlide = new Set();
+  page.groups.forEach(g => g.items.forEach(it => it.tags.forEach(t => allTagsInSlide.add(t))));
+  const showTags = Array.from(allTagsInSlide);
+
   return (
     <div className="slide" style={{
       backgroundColor: C.paper,
@@ -297,6 +301,41 @@ function MenuContentSlide({ slide, lang }) {
             </div>
           ))}
         </div>
+
+        {/* Dynamic Diet Tags Glossary */}
+        {showTags.length > 0 && (
+          <div style={{
+            display: "flex", gap: "16px", flexWrap: "wrap",
+            marginTop: 24, paddingTop: 16,
+            borderTop: "1px solid rgba(42,40,32,0.1)",
+            fontFamily: "var(--sans)", fontSize: "11px", color: "var(--buffet-ink-soft)",
+            textTransform: "uppercase", letterSpacing: "0.05em"
+          }}>
+            {showTags.includes("vegan") && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <DietMarks tags={["vegan"]} size={14} /> <span>{lang==='es'?'Vegano':'Vegan'}</span>
+              </div>
+            )}
+            {showTags.includes("vegetarian") && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <DietMarks tags={["vegetarian"]} size={14} /> <span>{lang==='es'?'Vegetariano':'Vegetarian'}</span>
+              </div>
+            )}
+            {showTags.includes("picante") && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <DietMarks tags={["picante"]} size={14} /> <span>{lang==='es'?'Picante':'Spicy'}</span>
+              </div>
+            )}
+            {showTags.includes("nueces") && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, width: '100%' }}>
+                <DietMarks tags={["nueces"]} size={14} /> 
+                <span style={{ textTransform: 'none', lineHeight: 1.3 }}>
+                  {lang==='es'?'Este alimento contiene nueces o semillas que pueden causar alergias.':'This food contains nuts or seeds that may cause allergies.'}
+                </span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -432,12 +471,11 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
         position:"absolute", top:0, left:"50%", right:0, bottom:0,
         display:"flex", flexDirection:"column", justifyContent:"flex-start",
         paddingTop:"clamp(140px, 20vh, 220px)",
-        paddingRight:"clamp(28px,3vw,52px)",
         paddingBottom:"clamp(56px,7vh,90px)",
         paddingLeft:"clamp(16px,1.5vw,28px)",
         boxSizing:"border-box"
       }}>
-          <div className="custom-section-panel-header" style={{ flexShrink: 0 }}>
+          <div className="custom-section-panel-header" style={{ flexShrink: 0, paddingRight: "clamp(28px,3vw,52px)" }}>
             <h2 className="custom-section-title">{t(cat.title,lang)}</h2>
             <div className={`custom-section-counter ${isCatFull?'is-full':''}`}>
               <span className="counter-num">{count}</span>
@@ -447,7 +485,7 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
             </div>
           </div>
 
-          <div style={{ flex: 1, overflowY: "auto", paddingRight: 8, paddingBottom: 16 }}>
+          <div style={{ flex: 1, overflowY: "auto", paddingRight: "clamp(28px,3vw,52px)", paddingBottom: 16 }}>
           {/* Groups list */}
           {cat.groups.map(group => {
             const groupCount = group.items.filter(it => selected.includes(it.id)).length;
@@ -455,33 +493,33 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
             
             return (
               <div key={group.id} style={{ marginBottom: 24 }}>
-                {group.title && (
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-                    <div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+                  <div>
+                    {group.title && (
                       <h3 style={{ 
                         fontFamily: "var(--display)", fontSize: "clamp(18px, 1.8vw, 22px)", 
                         color: "var(--buffet-ink)", margin: 0, fontWeight: 400 
                       }}>
                         {t(group.title, lang)}
                       </h3>
-                      <div style={{ 
-                        fontFamily: "var(--sans)", fontSize: "clamp(10px, 0.9vw, 12px)", 
-                        color: "var(--buffet-ink-soft)", marginTop: 2 
-                      }}>
-                        {lang==='es' ? `Elige ${group.max} opcion${group.max>1?'es':''}` : `Choose ${group.max} option${group.max>1?'s':''}`}
-                      </div>
-                    </div>
-                    <div style={{
-                      fontFamily: "var(--sans)", fontSize: "11px", fontWeight: 600,
-                      color: isGroupFull ? "var(--buffet-ink-soft)" : "var(--buffet-ink)",
-                      backgroundColor: isGroupFull ? "rgba(0,0,0,0.05)" : "transparent",
-                      border: isGroupFull ? "none" : "1px solid rgba(42,40,32,0.15)",
-                      padding: "2px 8px", borderRadius: 12, textTransform: "uppercase", letterSpacing: "0.05em"
+                    )}
+                    <div style={{ 
+                      fontFamily: "var(--sans)", fontSize: "clamp(10px, 0.9vw, 12px)", 
+                      color: "var(--buffet-ink-soft)", marginTop: 2 
                     }}>
-                      {groupCount} / {group.max}
+                      {lang==='es' ? `Elige ${group.max} opcion${group.max>1?'es':''}` : `Choose ${group.max} option${group.max>1?'s':''}`}
                     </div>
                   </div>
-                )}
+                  <div style={{
+                    fontFamily: "var(--sans)", fontSize: "11px", fontWeight: 600,
+                    color: isGroupFull ? "var(--buffet-ink-soft)" : "var(--buffet-ink)",
+                    backgroundColor: isGroupFull ? "rgba(0,0,0,0.05)" : "transparent",
+                    border: isGroupFull ? "none" : "1px solid rgba(42,40,32,0.15)",
+                    padding: "2px 8px", borderRadius: 12, textTransform: "uppercase", letterSpacing: "0.05em"
+                  }}>
+                    {groupCount} / {group.max}
+                  </div>
+                </div>
                 <ul className="custom-section-list">
                   {group.items.map(item => {
                     const sel = selected.includes(item.id);
@@ -519,7 +557,7 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
           })}
           </div>
 
-          <div style={{ flexShrink: 0 }}>
+          <div style={{ flexShrink: 0, paddingRight: "clamp(28px,3vw,52px)" }}>
           {/* Dynamic Diet Tags Glossary */}
           {showTags.length > 0 && (
             <div style={{
@@ -754,17 +792,19 @@ function CustomSummarySlide({ lang, clientName, selections }) {
                     if (!groupItems.length) return null;
                     return (
                       <div key={group.id} className="print-group" style={{
-                        marginTop: groupIdx > 0 ? 6 : 0,
-                        paddingTop: groupIdx > 0 ? 6 : 0,
+                        marginTop: groupIdx > 0 ? 2 : 0,
+                        paddingTop: groupIdx > 0 ? 2 : 0,
                         borderTop: groupIdx > 0 ? "1px dashed rgba(42,40,32,0.15)" : "none"
                       }}>
-                        {group.title && <div className="print-group-title" style={{ fontSize: "7px", fontWeight: 700, color: "var(--buffet-ink-soft)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 3 }}>{t(group.title, lang)}</div>}
-                        {groupItems.map(it => (
-                          <div key={it.id} className="print-item">
-                            <span className="print-item-label">{t(it.label,lang)}</span>
-                            <DietMarks tags={it.tags} size={10}/>
-                          </div>
-                        ))}
+                        {group.title && <div className="print-group-title" style={{ fontSize: "8px", fontWeight: 700, color: "var(--buffet-ink-soft)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>{t(group.title, lang)}</div>}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px' }}>
+                          {groupItems.map(it => (
+                            <div key={it.id} className="print-item">
+                              <span className="print-item-label">{t(it.label,lang)}</span>
+                              <DietMarks tags={it.tags} size={10}/>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     );
                   })}

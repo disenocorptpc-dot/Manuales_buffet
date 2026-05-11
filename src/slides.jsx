@@ -621,6 +621,7 @@ function CustomSummarySlide({ lang, clientName, selections }) {
 
     {/* NATIVE PRINT LAYOUT (Visible only during printing via @media print) */}
     <div className="print-only">
+      <img className="print-bg" src="_recursos/imagenes/05_Fondo_beige_menu.jpg" alt="" />
       <div className="print-page">
         <div className="print-hero-container">
           <div className="print-hero-circle" style={{ backgroundImage: `url(${heroUrl})` }} />

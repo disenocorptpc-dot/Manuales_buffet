@@ -416,9 +416,12 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
       {/* RIGHT 50% — title + categories, starts at midpoint */}
       <div style={{
         position:"absolute", top:0, left:"50%", right:0, bottom:0,
-        display:"flex", flexDirection:"column", justifyContent:"center",
+        display:"flex", flexDirection:"column", justifyContent:"flex-start",
         overflowY:"auto",
-        padding:"clamp(56px,7vh,90px) clamp(28px,3vw,52px) clamp(56px,7vh,90px) clamp(16px,1.5vw,28px)",
+        paddingTop:"clamp(140px, 20vh, 220px)",
+        paddingRight:"clamp(28px,3vw,52px)",
+        paddingBottom:"clamp(56px,7vh,90px)",
+        paddingLeft:"clamp(16px,1.5vw,28px)",
         boxSizing:"border-box"
       }}>
           <div className="custom-section-panel-header">
@@ -489,8 +492,48 @@ function CustomSummarySlide({ lang, clientName, selections }) {
   const firstCatWithSelection = CAT_ORDER.find(id => (selections[id]||[]).length > 0);
   const heroUrl = customCategories[firstCatWithSelection || 'comienzo'].hero;
 
+  const handleDownloadPDF = async () => {
+    // Dynamically import to keep bundle small
+    const html2canvas = (await import('html2canvas')).default;
+    const { jsPDF } = await import('jspdf');
+
+    const el = document.getElementById('custom-summary-capture');
+    if (!el) return;
+
+    const grain = el.querySelector('.grain');
+    if (grain) grain.style.display = 'none';
+    
+    const btn = document.getElementById('pdf-download-btn');
+    if (btn) btn.style.display = 'none';
+
+    try {
+      const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false });
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+      });
+      pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
+      
+      const dateStr = new Date().toLocaleDateString('es-MX').replace(/\//g, '-');
+      const safeName = (clientName || 'Menu').replace(/[^a-z0-9]/gi, '_');
+      pdf.save(`Menu_${safeName}_${dateStr}.pdf`);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      if (grain) grain.style.display = '';
+      if (btn) btn.style.display = '';
+    }
+  };
+
+  const currentDateStr = new Date().toLocaleDateString(lang==='es'?'es-MX':'en-US', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+
   return (
-    <div className="slide" style={{
+    <div id="custom-summary-capture" className="slide" style={{
       backgroundColor: C.paper,
       backgroundImage: "url(_recursos/imagenes/05_Fondo_beige_menu.jpg)",
       backgroundSize: "cover", backgroundPosition: "center"
@@ -515,9 +558,12 @@ function CustomSummarySlide({ lang, clientName, selections }) {
       {/* RIGHT 50% — client name + categories */}
       <div style={{
         position:"absolute", top:0, left:"50%", right:0, bottom:0,
-        display:"flex", flexDirection:"column", justifyContent:"center",
+        display:"flex", flexDirection:"column", justifyContent:"flex-start",
         overflowY:"auto",
-        padding:"clamp(56px,7vh,90px) clamp(28px,3vw,52px) clamp(56px,7vh,90px) clamp(16px,1.5vw,28px)",
+        paddingTop:"clamp(140px, 20vh, 220px)",
+        paddingRight:"clamp(28px,3vw,52px)",
+        paddingBottom:"clamp(56px,7vh,90px)",
+        paddingLeft:"clamp(16px,1.5vw,28px)",
         boxSizing:"border-box"
       }}>
         {/* Header */}
@@ -529,8 +575,12 @@ function CustomSummarySlide({ lang, clientName, selections }) {
           }}>{lang==='es'?'Menú Personalizado':'Customized Menu'}</div>
           <div style={{
             fontFamily:SANS, fontWeight:700, fontSize:"clamp(16px,1.8vw,24px)",
-            letterSpacing:"0.12em", color:C.ink
+            letterSpacing:"0.12em", color:C.ink, marginBottom: 4
           }}>{clientName||'—'}</div>
+          <div style={{
+            fontFamily:SANS, fontStyle:"italic", fontSize:"clamp(10px,0.9vw,12px)",
+            color:C.inkSoft
+          }}>{currentDateStr}</div>
         </div>
 
         {/* Categories */}
@@ -570,6 +620,26 @@ function CustomSummarySlide({ lang, clientName, selections }) {
             );
           })}
         </div>
+
+        {/* PDF Download Button */}
+        <button id="pdf-download-btn" onClick={handleDownloadPDF} style={{
+          marginTop: 40, padding: "14px 28px",
+          background: C.olive, color: C.onOlive,
+          border: "none", borderRadius: 8,
+          fontFamily: SANS, fontSize: "10px", fontWeight: 700,
+          letterSpacing: "0.28em", textTransform: "uppercase",
+          cursor: "pointer", alignSelf: "flex-start",
+          display: "inline-flex", alignItems: "center", gap: 8,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+          transition: "transform 150ms ease, background 150ms ease"
+        }} onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.background = '#232a1f'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.background = C.olive; }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+             <polyline points="7 10 12 15 17 10"/>
+             <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          {lang==='es' ? 'Descargar PDF' : 'Download PDF'}
+        </button>
       </div>
     </div>
   );

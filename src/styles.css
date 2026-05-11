@@ -348,8 +348,6 @@
 .custom-pill-body {
   position: absolute !important;
   inset: 0 !important;
-  bottom: auto !important;
-  left: auto !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 6px !important;

@@ -383,7 +383,10 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
   const isFull   = count >= cat.max;
   const allDone  = CAT_ORDER.every(id => (selections[id]||[]).length >= customCategories[id].max);
   const curIdx   = CAT_ORDER.indexOf(slide.categoryId);
-  const nextCatId= CAT_ORDER.slice(curIdx+1).find(id=>(selections[id]||[]).length < customCategories[id].max);
+  let nextCatId  = CAT_ORDER.slice(curIdx+1).find(id=>(selections[id]||[]).length < customCategories[id].max);
+  if (!nextCatId && !allDone) {
+    nextCatId = CAT_ORDER.slice(0, curIdx).find(id=>(selections[id]||[]).length < customCategories[id].max);
+  }
 
   const toggle = itemId => {
     if (selected.includes(itemId)) onToggleItem(cat.id, selected.filter(id=>id!==itemId));

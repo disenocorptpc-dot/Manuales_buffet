@@ -439,7 +439,7 @@
     width: 8.5in;
     height: 11in; /* Force exactly one page */
     overflow: hidden;
-    background-color: #f8f6f0;
+    background: transparent !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -450,12 +450,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -1;
+    z-index: 0;
   }
 
   .print-page {
     position: relative;
-    z-index: 1;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;

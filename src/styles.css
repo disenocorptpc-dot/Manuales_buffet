@@ -558,7 +558,7 @@
 
   .print-footer-logo {
     position: absolute;
-    bottom: 0.4in;
+    bottom: 0.2in; /* Moved closer to the bottom edge */
     left: 50%;
     transform: translateX(-50%);
     width: 1.8in;

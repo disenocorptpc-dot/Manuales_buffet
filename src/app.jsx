@@ -171,14 +171,10 @@ function App() {
       {/* Top chrome */}
       <header className={`chrome chrome-top ${chromeOnOlive?'chrome--olive':''}`}>
         <div className="chrome-left">
-          {!isCover && !isSection && (
-            <button className="chrome-link" onClick={goHome}>
-              <i className="ti ti-home"/>{t(ui.home,lang)}
-            </button>
-          )}
-          {(isSetMenuFlow||isSelector) && (
-            <button className="chrome-link" onClick={goSetMenus}>{t(ui.setMenus,lang)}</button>
-          )}
+          <button className="chrome-link" onClick={goHome}>
+            <i className="ti ti-home"/>{t(ui.home,lang)}
+          </button>
+          <button className="chrome-link" onClick={goSetMenus}>{t(ui.setMenus,lang)}</button>
           {isCustomFlow && (
             <button className="chrome-link" onClick={goCustomSelector}>
               <i className="ti ti-layout-grid"/>{t(ui.customMenu,lang)}

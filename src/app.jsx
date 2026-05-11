@@ -17,7 +17,6 @@ function App() {
   const deck = deckState.deck;
   const ui   = deckState.ui;
 
-  const [editMode,   setEditMode]   = useState(false);
   const [clientName, setClientName] = useState('');
   const [selections, setSelections] = useState({});
 
@@ -53,8 +52,8 @@ function App() {
 
   // ── Semantic jumps ────────────────────────────────────────────
   const goHome = useCallback(() => {
-    const i = deck.findIndex(s => s.type==='section'); goTo(i>=0?i:0);
-  }, [deck, goTo]);
+    goTo(0);
+  }, [goTo]);
 
   const goSetMenus = useCallback(() => {
     const i = deck.findIndex(s => s.type==='selector'); if (i>=0) goTo(i);
@@ -88,12 +87,13 @@ function App() {
   }, [deck, goTo]);
 
   // ── Arrow nav ─────────────────────────────────────────────────
-  // For set-menu group: find bounds of ALL set-menu slides (both menus)
+  // For set-menu group: find bounds of CURRENT set-menu only
   const setMenuBounds = useMemo(() => {
-    const indices = deck.map((s,i)=>s.group==='set-menu'?i:-1).filter(i=>i>=0);
+    if (slide.group !== 'set-menu') return { min:0, max:0 };
+    const indices = deck.map((s,i)=>(s.group==='set-menu' && s.menuId===slide.menuId) ? i : -1).filter(i=>i>=0);
     if (!indices.length) return { min:0, max:0 };
     return { min: indices[0], max: indices[indices.length-1] };
-  }, [deck]);
+  }, [deck, slide]);
 
   const group = slide.group || 'locked';
   const canArrow = group==='cover' || group==='set-menu';
@@ -102,27 +102,24 @@ function App() {
     if (!canArrow) return;
     if (group==='set-menu') {
       if (idx > setMenuBounds.min) goTo(idx-1);
-      else goSetMenus(); // at first set-menu slide → back to selector
     } else {
       if (idx>0) goTo(idx-1);
     }
-  }, [canArrow, group, idx, setMenuBounds, goTo, goSetMenus]);
+  }, [canArrow, group, idx, setMenuBounds, goTo]);
 
   const arrowNext = useCallback(() => {
     if (!canArrow) return;
     if (group==='set-menu') {
       if (idx < setMenuBounds.max) goTo(idx+1);
-      else goSetMenus(); // at last set-menu slide → back to selector
     } else {
       if (idx < deck.length-1) goTo(idx+1);
     }
-  }, [canArrow, group, idx, deck.length, setMenuBounds, goTo, goSetMenus]);
+  }, [canArrow, group, idx, deck.length, setMenuBounds, goTo]);
 
-  const prevDisabled = !canArrow;
-  const nextDisabled = !canArrow;
+  const prevDisabled = !canArrow || (group==='set-menu' && idx <= setMenuBounds.min);
+  const nextDisabled = !canArrow || (group==='set-menu' && idx >= setMenuBounds.max);
 
   useEffect(() => {
-    if (editMode) return;
     const onKey = e => {
       if (e.key==='ArrowRight'||e.key==='PageDown') { arrowNext(); e.preventDefault(); }
       else if (e.key==='ArrowLeft'||e.key==='PageUp') { arrowPrev(); e.preventDefault(); }
@@ -130,7 +127,7 @@ function App() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [editMode, arrowNext, arrowPrev, goHome]);
+  }, [arrowNext, arrowPrev, goHome]);
 
   // ── Touch swipe (iPad) ───────────────────────────────────────
   const touchStart = useRef(null);
@@ -188,8 +185,6 @@ function App() {
             <span className="lang-divider">·</span>
             <button className={`lang-btn ${lang==='en'?'is-active':''}`} onClick={()=>setLang('en')}>EN</button>
           </div>
-          <button className={`cms-open-btn ${chromeOnOlive?'cms-open-btn--olive':''}`}
-            onClick={()=>setEditMode(true)}>EDITOR</button>
         </div>
       </header>
 
@@ -238,14 +233,6 @@ function App() {
     </div>
   );
 
-  if (editMode) {
-    return (
-      <EditorShell deckState={deckState} setDeckState={setDeckState}
-        activeIdx={idx} setActiveIdx={setIdx} onClose={()=>setEditMode(false)}>
-        {viewer}
-      </EditorShell>
-    );
-  }
   return viewer;
 }
 

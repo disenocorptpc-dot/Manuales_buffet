@@ -343,7 +343,7 @@ function CustomSelectorSlide({ slide, lang, onPickCategory, selections }) {
     }}>
       <div className="grain" />
       <div className="custom-selector-content">
-        <header className="custom-selector-header">
+        <header className="custom-selector-header" style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <div className="custom-selector-overline">Customized Menu</div>
           <h2 className="custom-selector-title">{lang==='es'?'Arma tu menú':'Build your menu'}</h2>
           <p className="custom-selector-sub">{lang==='es'?'Selecciona una categoría':'Select a category to get started'}</p>
@@ -396,16 +396,31 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
       backgroundSize: "cover", backgroundPosition: "center"
     }}>
       <div className="grain" />
-      <div className="custom-section-content">
+      <div style={{display: "contents"}}>
 
-        {/* Left photo */}
-        <div className="custom-section-photo-wrap">
-          <div className="custom-section-photo" style={{backgroundImage:`url(${cat.hero})`}}/>
-          <div className="custom-section-photo-label"><span>{t(cat.title,lang)}</span></div>
-        </div>
+      {/* LEFT 50% — circle centered, accounting for chrome bars */}
+      <div style={{
+        position:"absolute", top:0, left:0, width:"50%", height:"100%",
+        display:"flex", alignItems:"center", justifyContent:"center",
+        paddingTop:"56px", paddingBottom:"56px", boxSizing:"border-box"
+      }}>
+        <div style={{
+          width:"clamp(200px,38vmin,400px)", height:"clamp(200px,38vmin,400px)",
+          borderRadius:"50%", overflow:"hidden",
+          border:"1.5px solid rgba(42,40,32,0.18)",
+          backgroundImage:`url(${cat.hero})`,
+          backgroundSize:"cover", backgroundPosition:"center"
+        }} />
+      </div>
 
-        {/* Right panel */}
-        <div className="custom-section-items-panel">
+      {/* RIGHT 50% — title + categories, starts at midpoint */}
+      <div style={{
+        position:"absolute", top:0, left:"50%", right:0, bottom:0,
+        display:"flex", flexDirection:"column", justifyContent:"center",
+        overflowY:"auto",
+        padding:"clamp(56px,7vh,90px) clamp(28px,3vw,52px) clamp(56px,7vh,90px) clamp(16px,1.5vw,28px)",
+        boxSizing:"border-box"
+      }}>
           <div className="custom-section-panel-header">
             <h2 className="custom-section-title">{t(cat.title,lang)}</h2>
             <div className={`custom-section-counter ${isFull?'is-full':''}`}>

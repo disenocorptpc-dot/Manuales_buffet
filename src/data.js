@@ -140,90 +140,120 @@ export const DECK_CONTENT = {
   customCategories: {
     "comienzo": {
       id:"comienzo", title:{es:"Para un buen comienzo",en:"A Great Start"},
-      subtitle:{es:"Elige 3 opciones",en:"Choose 3 options"}, max:3,
+      subtitle:{es:"Elige opciones",en:"Choose options"}, max:8,
       hero:"assets/img/09_un_buen_comienzo_custom_menu.webp",
-      items:[
-        {id:"c1", label:{es:"Agua de piña",                 en:"Pineapple water"              },tags:["vegan"]},
-        {id:"c2", label:{es:"Jugo de manzana",              en:"Apple juice"                  },tags:["vegan"]},
-        {id:"c3", label:{es:"Jugo de naranja",              en:"Orange juice"                 },tags:["vegan"]},
-        {id:"c4", label:{es:"Jugo de toronja",              en:"Grapefruit juice"             },tags:["vegan"]},
-        {id:"c5", label:{es:"Jugo de zanahoria y betabel",  en:"Carrot & beet juice"          },tags:["vegan"]},
-        {id:"c6", label:{es:"Jugo verde",                   en:"Green juice"                  },tags:["vegan"]},
-        {id:"c7", label:{es:"Piña",                         en:"Pineapple"                    },tags:["vegan"]},
-        {id:"c8", label:{es:"Papaya",                       en:"Papaya"                       },tags:["vegan"]},
-        {id:"c9", label:{es:"Melón chino",                  en:"Cantaloupe"                   },tags:["vegan"]},
-        {id:"c10",label:{es:"Melón Valencia",               en:"Honeydew melon"               },tags:["vegan"]},
-        {id:"c11",label:{es:"Sandía",                       en:"Watermelon"                   },tags:["vegan"]},
-        {id:"c12",label:{es:"Toronja",                      en:"Grapefruit"                   },tags:["vegan"]},
-        {id:"c13",label:{es:"Concha",                       en:"Concha"                       },tags:["vegetarian"]},
-        {id:"c14",label:{es:"Oreja",                        en:"Palmier"                      },tags:["vegetarian"]},
-        {id:"c15",label:{es:"Croissant natural",            en:"Plain croissant"              },tags:["vegetarian"]},
-        {id:"c16",label:{es:"Croissant de chocolate",       en:"Chocolate croissant"          },tags:["vegetarian"]},
-        {id:"c17",label:{es:"Brioche de vainilla",          en:"Vanilla brioche"              },tags:["vegetarian"]},
-        {id:"c18",label:{es:"Rollo de canela",              en:"Cinnamon roll"                },tags:["vegetarian","nueces"]},
-      ],
+      groups:[
+        {
+          id:"jugos", title:{es:"Jugos",en:"Juices"}, max:2,
+          items:[
+            {id:"c1", label:{es:"Agua de piña",                 en:"Pineapple water"              },tags:["vegan"]},
+            {id:"c2", label:{es:"Jugo de manzana",              en:"Apple juice"                  },tags:["vegan"]},
+            {id:"c3", label:{es:"Jugo de naranja",              en:"Orange juice"                 },tags:["vegan"]},
+            {id:"c4", label:{es:"Jugo de toronja",              en:"Grapefruit juice"             },tags:["vegan"]},
+            {id:"c5", label:{es:"Jugo de zanahoria y betabel",  en:"Carrot & beet juice"          },tags:["vegan"]},
+            {id:"c6", label:{es:"Jugo verde",                   en:"Green juice"                  },tags:["vegan"]},
+          ]
+        },
+        {
+          id:"fruta", title:{es:"Fruta",en:"Fruit"}, max:3,
+          items:[
+            {id:"c7", label:{es:"Piña",                         en:"Pineapple"                    },tags:["vegan"]},
+            {id:"c8", label:{es:"Papaya",                       en:"Papaya"                       },tags:["vegan"]},
+            {id:"c9", label:{es:"Melón chino",                  en:"Cantaloupe"                   },tags:["vegan"]},
+            {id:"c10",label:{es:"Melón Valencia",               en:"Honeydew melon"               },tags:["vegan"]},
+            {id:"c11",label:{es:"Sandía",                       en:"Watermelon"                   },tags:["vegan"]},
+            {id:"c12",label:{es:"Toronja",                      en:"Grapefruit"                   },tags:["vegan"]},
+          ]
+        },
+        {
+          id:"panaderia", title:{es:"Panadería",en:"Bakery"}, max:3,
+          items:[
+            {id:"c13",label:{es:"Concha",                       en:"Concha"                       },tags:["vegetarian"]},
+            {id:"c14",label:{es:"Oreja",                        en:"Palmier"                      },tags:["vegetarian"]},
+            {id:"c15",label:{es:"Croissant natural",            en:"Plain croissant"              },tags:["vegetarian"]},
+            {id:"c16",label:{es:"Croissant de chocolate",       en:"Chocolate croissant"          },tags:["vegetarian"]},
+            {id:"c17",label:{es:"Brioche de vainilla",          en:"Vanilla brioche"              },tags:["vegetarian"]},
+            {id:"c18",label:{es:"Rollo de canela",              en:"Cinnamon roll"                },tags:["vegetarian","nueces"]},
+          ]
+        }
+      ]
     },
     "dulce": {
       id:"dulce", title:{es:"Una dulce elección",en:"A Sweet Choice"},
-      subtitle:{es:"Elige 3 opciones",en:"Choose 3 options"}, max:3,
+      subtitle:{es:"Elige 1 opción",en:"Choose 1 option"}, max:1,
       hero:"assets/img/06_una_dulce_eleccion_custom_menu.webp",
-      items:[
-        {id:"d1", label:{es:"Arroz con leche",              en:"Rice pudding"                 },tags:["vegetarian"], description: { es: "Tradicional arroz con leche, pasitas y canela.", en: "Traditional rice pudding with raisins and cinnamon." } },
-        {id:"d2", label:{es:"Avena caliente",               en:"Hot oatmeal"                  },tags:["vegetarian","nueces"], description: { es: "Avena con leche y nuez.", en: "Oatmeal with milk and walnuts." } },
-        {id:"d3", label:{es:"Budín de croissant",           en:"Croissant pudding"            },tags:["vegetarian"], description: { es: "Budín elaborado con croissant y servido con nuestra combinación de leches.", en: "Pudding made with croissant and served with our combination of milks." } },
-        {id:"d4", label:{es:"Hot cake de avena y coco",     en:"Oatmeal & coconut pancake"    },tags:["vegan"], description: { es: "Hot cakes veganos preparados con coco, avena y plátano.", en: "Vegan pancakes prepared with coconut, oatmeal and banana." } },
-        {id:"d5", label:{es:"Hot cakes con arándanos",      en:"Blueberry pancakes"           },tags:["vegetarian"], description: { es: "Hot cakes con trocitos de arándano deshidratado.", en: "Pancakes with bits of dried cranberry." } },
-        {id:"d6", label:{es:"Hot cake natural",             en:"Plain pancake"                },tags:["vegetarian"], description: { es: "Nuestros clásicos e imperdibles hot cakes.", en: "Our classic and unmissable hot cakes." } },
-        {id:"d7", label:{es:"Pan francés de vainilla",      en:"Vanilla french toast"         },tags:["vegetarian"], description: { es: "Panqué de vainilla hidratado en leche con una ligera costra crujiente y dorada.", en: "Vanilla pound cake soaked in milk with a light golden crust." } },
-        {id:"d8", label:{es:"Roles de canela glaseados",    en:"Glazed cinnamon rolls"        },tags:["vegetarian"], description: { es: "Se sirven calientes.", en: "Served hot." } },
-        {id:"d9", label:{es:"Waffles",                      en:"Waffles"                      },tags:["vegetarian"], description: { es: "De sabor suave y ligero espolvoreados con azúcar glass.", en: "Light and fluffy, dusted with powdered sugar." } },
-        {id:"d10",label:{es:"Plátanos",                     en:"Bananas"                      },tags:["vegan"], description: { es: "Horneados a baja temperatura.", en: "Baked at low temperature." } },
-      ],
+      groups:[
+        {
+          id:"dulce_grp", title:null, max:1,
+          items:[
+            {id:"d1", label:{es:"Arroz con leche",              en:"Rice pudding"                 },tags:["vegetarian"], description: { es: "Tradicional arroz con leche, pasitas y canela.", en: "Traditional rice pudding with raisins and cinnamon." } },
+            {id:"d2", label:{es:"Avena caliente",               en:"Hot oatmeal"                  },tags:["vegetarian","nueces"], description: { es: "Avena con leche y nuez.", en: "Oatmeal with milk and walnuts." } },
+            {id:"d3", label:{es:"Budín de croissant",           en:"Croissant pudding"            },tags:["vegetarian"], description: { es: "Budín elaborado con croissant y servido con nuestra combinación de leches.", en: "Pudding made with croissant and served with our combination of milks." } },
+            {id:"d4", label:{es:"Hot cake de avena y coco",     en:"Oatmeal & coconut pancake"    },tags:["vegan"], description: { es: "Hot cakes veganos preparados con coco, avena y plátano.", en: "Vegan pancakes prepared with coconut, oatmeal and banana." } },
+            {id:"d5", label:{es:"Hot cakes con arándanos",      en:"Blueberry pancakes"           },tags:["vegetarian"], description: { es: "Hot cakes con trocitos de arándano deshidratado.", en: "Pancakes with bits of dried cranberry." } },
+            {id:"d6", label:{es:"Hot cake natural",             en:"Plain pancake"                },tags:["vegetarian"], description: { es: "Nuestros clásicos e imperdibles hot cakes.", en: "Our classic and unmissable hot cakes." } },
+            {id:"d7", label:{es:"Pan francés de vainilla",      en:"Vanilla french toast"         },tags:["vegetarian"], description: { es: "Panqué de vainilla hidratado en leche con una ligera costra crujiente y dorada.", en: "Vanilla pound cake soaked in milk with a light golden crust." } },
+            {id:"d8", label:{es:"Roles de canela glaseados",    en:"Glazed cinnamon rolls"        },tags:["vegetarian"], description: { es: "Se sirven calientes.", en: "Served hot." } },
+            {id:"d9", label:{es:"Waffles",                      en:"Waffles"                      },tags:["vegetarian"], description: { es: "De sabor suave y ligero espolvoreados con azúcar glass.", en: "Light and fluffy, dusted with powdered sugar." } },
+            {id:"d10",label:{es:"Plátanos",                     en:"Bananas"                      },tags:["vegan"], description: { es: "Horneados a baja temperatura.", en: "Baked at low temperature." } },
+          ]
+        }
+      ]
     },
     "principal": {
       id:"principal", title:{es:"Plato Principal",en:"Main Course"},
       subtitle:{es:"Elige 3 opciones",en:"Choose 3 options"}, max:3,
       hero:"assets/img/01_plato_principal_custom_menu.webp",
-      items:[
-        {id:"p1", label:{es:"Chilaquiles rojos",                 en:"Red chilaquiles"                 },tags:["picante"], description: { es: "Chilaquiles bañados con salsa roja preparados con crema y queso.", en: "Bathed in red sauce, prepared with cream and cheese." } },
-        {id:"p2", label:{es:"Huevo a la mexicana",               en:"Mexican-style eggs"              },tags:["vegetarian"], description: { es: "Huevo preparado con cebolla, tomate, cilantro y pimiento morrón.", en: "Egg prepared with onion, tomato, cilantro and bell pepper." } },
-        {id:"p3", label:{es:"Huevo con longaniza",               en:"Eggs with longaniza"             },tags:[], description: { es: "Huevo revuelto con un toque ahumado de la longaniza.", en: "Scrambled egg with a smoky touch of longaniza." } },
-        {id:"p4", label:{es:"Huevo con salsa verde",             en:"Eggs with green salsa"           },tags:["vegetarian"], description: { es: "Huevo revuelto bañado en salsa de tomate verde y chiles.", en: "Scrambled egg bathed in green tomatillo and chili sauce." } },
-        {id:"p5", label:{es:"Huevos naturales",                  en:"Plain eggs"                      },tags:["vegetarian"], description: { es: "Un clásico imperdible, huevo revuelto con un toque de pimienta.", en: "A classic, scrambled egg with a touch of pepper." } },
-        {id:"p6", label:{es:"Huevo con jamón",                   en:"Ham & eggs"                      },tags:[], description: { es: "Esponjoso huevo revuelto con jamón y un toque de mantequilla.", en: "Fluffy scrambled egg with ham and a touch of butter." } },
-        {id:"p7", label:{es:"Muffin de huevo y chorizo",         en:"Egg & chorizo muffin"            },tags:[], description: { es: "Huevo con chorizo rojo servido con salsa roja y nopales.", en: "Egg with red chorizo served with red sauce and cactus." } },
-        {id:"p8", label:{es:"Muffin de huevo y tocino",          en:"Egg & bacon muffin"              },tags:[], description: { es: "Huevo con tocino crujiente, servido con salsa de tomate y orégano.", en: "Egg with crispy bacon, served with tomato sauce and oregano." } },
-        {id:"p9", label:{es:"Chilaquiles verdes",                en:"Green chilaquiles"               },tags:["picante"], description: { es: "Chilaquiles bañados con salsa verde preparados con crema y queso.", en: "Bathed in green sauce, prepared with cream and cheese." } },
-        {id:"p10",label:{es:"Queso panela asado",                en:"Grilled panela cheese"           },tags:["vegetarian"], description: { es: "Rebanadas de queso panela asadas servidas con salsa de tomate y orégano.", en: "Grilled panela cheese slices served with tomato sauce and oregano." } },
-        {id:"p11",label:{es:"Tacos dorados",                     en:"Fried tacos"                     },tags:[], description: { es: "De res o pollo.", en: "Beef or chicken." } },
-        {id:"p12",label:{es:"Quiche croissant de jamón y queso", en:"Ham & cheese croissant quiche"   },tags:[], description: { es: "Crujiente quiche croissant con jamón y queso.", en: "Crispy croissant quiche with ham and cheese." } },
-        {id:"p13",label:{es:"Tinga de pollo",                    en:"Chicken tinga"                   },tags:["picante"], description: { es: "Pollo deshebrado con tomate y chile chipotle.", en: "Shredded chicken with tomato and chipotle chili." } },
-        {id:"p14",label:{es:"Rajas con papas",                   en:"Poblano strips with potatoes"    },tags:["vegetarian","picante"], description: { es: "Preparadas con crema y granos de elote.", en: "Prepared with cream and corn kernels." } },
-        {id:"p15",label:{es:"Rollitos de pollo y vegetales",     en:"Chicken & vegetable rolls"       },tags:[], description: { es: "Pechuga de pollo rellena de calabaza, zanahoria y pimientos con salsa de tomate y orégano.", en: "Chicken breast stuffed with squash, carrot and peppers with tomato sauce and oregano." } },
-        {id:"p16",label:{es:"Tortilla española",                 en:"Spanish omelette"                },tags:["vegetarian"], description: { es: "Uno de los platillos más ricos y famosos de España: finas láminas de papa con huevo.", en: "One of Spain's most famous dishes: thin slices of potato with egg." } },
-        {id:"p17",label:{es:"Tortitas de coliflor y queso",      en:"Cauliflower & cheese patties"    },tags:["vegetarian"], description: { es: "Coliflor cocida rellena de queso panela acompañada con salsa de tomate y orégano.", en: "Boiled cauliflower stuffed with panela cheese, accompanied by tomato sauce and oregano." } },
-      ],
+      groups:[
+        {
+          id:"principal_grp", title:null, max:3,
+          items:[
+            {id:"p1", label:{es:"Chilaquiles rojos",                 en:"Red chilaquiles"                 },tags:["picante"], description: { es: "Chilaquiles bañados con salsa roja preparados con crema y queso.", en: "Bathed in red sauce, prepared with cream and cheese." } },
+            {id:"p2", label:{es:"Huevo a la mexicana",               en:"Mexican-style eggs"              },tags:["vegetarian"], description: { es: "Huevo preparado con cebolla, tomate, cilantro y pimiento morrón.", en: "Egg prepared with onion, tomato, cilantro and bell pepper." } },
+            {id:"p3", label:{es:"Huevo con longaniza",               en:"Eggs with longaniza"             },tags:[], description: { es: "Huevo revuelto con un toque ahumado de la longaniza.", en: "Scrambled egg with a smoky touch of longaniza." } },
+            {id:"p4", label:{es:"Huevo con salsa verde",             en:"Eggs with green salsa"           },tags:["vegetarian"], description: { es: "Huevo revuelto bañado en salsa de tomate verde y chiles.", en: "Scrambled egg bathed in green tomatillo and chili sauce." } },
+            {id:"p5", label:{es:"Huevos naturales",                  en:"Plain eggs"                      },tags:["vegetarian"], description: { es: "Un clásico imperdible, huevo revuelto con un toque de pimienta.", en: "A classic, scrambled egg with a touch of pepper." } },
+            {id:"p6", label:{es:"Huevo con jamón",                   en:"Ham & eggs"                      },tags:[], description: { es: "Esponjoso huevo revuelto con jamón y un toque de mantequilla.", en: "Fluffy scrambled egg with ham and a touch of butter." } },
+            {id:"p7", label:{es:"Muffin de huevo y chorizo",         en:"Egg & chorizo muffin"            },tags:[], description: { es: "Huevo con chorizo rojo servido con salsa roja y nopales.", en: "Egg with red chorizo served with red sauce and cactus." } },
+            {id:"p8", label:{es:"Muffin de huevo y tocino",          en:"Egg & bacon muffin"              },tags:[], description: { es: "Huevo con tocino crujiente, servido con salsa de tomate y orégano.", en: "Egg with crispy bacon, served with tomato sauce and oregano." } },
+            {id:"p9", label:{es:"Chilaquiles verdes",                en:"Green chilaquiles"               },tags:["picante"], description: { es: "Chilaquiles bañados con salsa verde preparados con crema y queso.", en: "Bathed in green sauce, prepared with cream and cheese." } },
+            {id:"p10",label:{es:"Queso panela asado",                en:"Grilled panela cheese"           },tags:["vegetarian"], description: { es: "Rebanadas de queso panela asadas servidas con salsa de tomate y orégano.", en: "Grilled panela cheese slices served with tomato sauce and oregano." } },
+            {id:"p11",label:{es:"Tacos dorados",                     en:"Fried tacos"                     },tags:[], description: { es: "De res o pollo.", en: "Beef or chicken." } },
+            {id:"p12",label:{es:"Quiche croissant de jamón y queso", en:"Ham & cheese croissant quiche"   },tags:[], description: { es: "Crujiente quiche croissant con jamón y queso.", en: "Crispy croissant quiche with ham and cheese." } },
+            {id:"p13",label:{es:"Tinga de pollo",                    en:"Chicken tinga"                   },tags:["picante"], description: { es: "Pollo deshebrado con tomate y chile chipotle.", en: "Shredded chicken with tomato and chipotle chili." } },
+            {id:"p14",label:{es:"Rajas con papas",                   en:"Poblano strips with potatoes"    },tags:["vegetarian","picante"], description: { es: "Preparadas con crema y granos de elote.", en: "Prepared with cream and corn kernels." } },
+            {id:"p15",label:{es:"Rollitos de pollo y vegetales",     en:"Chicken & vegetable rolls"       },tags:[], description: { es: "Pechuga de pollo rellena de calabaza, zanahoria y pimientos con salsa de tomate y orégano.", en: "Chicken breast stuffed with squash, carrot and peppers with tomato sauce and oregano." } },
+            {id:"p16",label:{es:"Tortilla española",                 en:"Spanish omelette"                },tags:["vegetarian"], description: { es: "Uno de los platillos más ricos y famosos de España: finas láminas de papa con huevo.", en: "One of Spain's most famous dishes: thin slices of potato with egg." } },
+            {id:"p17",label:{es:"Tortitas de coliflor y queso",      en:"Cauliflower & cheese patties"    },tags:["vegetarian"], description: { es: "Coliflor cocida rellena de queso panela acompañada con salsa de tomate y orégano.", en: "Boiled cauliflower stuffed with panela cheese, accompanied by tomato sauce and oregano." } },
+          ]
+        }
+      ]
     },
     "acompanar": {
       id:"acompanar", title:{es:"Para acompañar",en:"On the Side"},
       subtitle:{es:"Elige 3 opciones",en:"Choose 3 options"}, max:3,
       hero:"assets/img/07_para_acompanar_custom_menu.webp",
-      items:[
-        {id:"a1", label:{es:"Chorizo español",            en:"Spanish chorizo"             },tags:[]},
-        {id:"a2", label:{es:"Arroz blanco",               en:"White rice"                  },tags:["vegan"]},
-        {id:"a3", label:{es:"Verduras al vapor",          en:"Steamed vegetables"          },tags:["vegan"]},
-        {id:"a4", label:{es:"Puré de papa",               en:"Mashed potatoes"             },tags:["vegetarian"]},
-        {id:"a5", label:{es:"Frijoles refritos",          en:"Refried beans"               },tags:["vegetarian"]},
-        {id:"a6", label:{es:"Verduras a la mantequilla",  en:"Buttered vegetables"         },tags:["vegetarian"]},
-        {id:"a7", label:{es:"Mix de embutidos",           en:"Sausage mix"                 },tags:[]},
-        {id:"a8", label:{es:"Salchicha asada",            en:"Grilled sausage"             },tags:[]},
-        {id:"a9", label:{es:"Tocino crujiente",           en:"Crispy bacon"                },tags:[]},
-        {id:"a10",label:{es:"Brócoli al gratín",          en:"Broccoli au gratin"          },tags:["vegetarian"]},
-        {id:"a11",label:{es:"Champiñones salteados",      en:"Sautéed mushrooms"           },tags:["vegan"]},
-        {id:"a12",label:{es:"Espinacas salteadas",        en:"Sautéed spinach"             },tags:["vegan"]},
-        {id:"a13",label:{es:"Tomates asados",             en:"Roasted tomatoes"            },tags:["vegan"]},
-      ],
-    },
+      groups:[
+        {
+          id:"acompanar_grp", title:null, max:3,
+          items:[
+            {id:"a1", label:{es:"Chorizo español",            en:"Spanish chorizo"             },tags:[]},
+            {id:"a2", label:{es:"Arroz blanco",               en:"White rice"                  },tags:["vegan"]},
+            {id:"a3", label:{es:"Verduras al vapor",          en:"Steamed vegetables"          },tags:["vegan"]},
+            {id:"a4", label:{es:"Puré de papa",               en:"Mashed potatoes"             },tags:["vegetarian"]},
+            {id:"a5", label:{es:"Frijoles refritos",          en:"Refried beans"               },tags:["vegetarian"]},
+            {id:"a6", label:{es:"Verduras a la mantequilla",  en:"Buttered vegetables"         },tags:["vegetarian"]},
+            {id:"a7", label:{es:"Mix de embutidos",           en:"Sausage mix"                 },tags:[]},
+            {id:"a8", label:{es:"Salchicha asada",            en:"Grilled sausage"             },tags:[]},
+            {id:"a9", label:{es:"Tocino crujiente",           en:"Crispy bacon"                },tags:[]},
+            {id:"a10",label:{es:"Brócoli al gratín",          en:"Broccoli au gratin"          },tags:["vegetarian"]},
+            {id:"a11",label:{es:"Champiñones salteados",      en:"Sautéed mushrooms"           },tags:["vegan"]},
+            {id:"a12",label:{es:"Espinacas salteadas",        en:"Sautéed spinach"             },tags:["vegan"]},
+            {id:"a13",label:{es:"Tomates asados",             en:"Roasted tomatoes"            },tags:["vegan"]},
+          ]
+        }
+      ]
+    }
   },
 
   // ── Deck ───────────────────────────────────────────────────────

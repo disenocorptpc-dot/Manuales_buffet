@@ -380,7 +380,8 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
   const cat      = customCategories[slide.categoryId];
   const selected = selections[cat.id] || [];
   const count    = selected.length;
-  const isFull   = count >= cat.max;
+  const isCatFull = count >= cat.max;
+  
   const allDone  = CAT_ORDER.every(id => (selections[id]||[]).length >= customCategories[id].max);
   const curIdx   = CAT_ORDER.indexOf(slide.categoryId);
   let nextCatId  = CAT_ORDER.slice(curIdx+1).find(id=>(selections[id]||[]).length < customCategories[id].max);
@@ -388,10 +389,20 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
     nextCatId = CAT_ORDER.slice(0, curIdx).find(id=>(selections[id]||[]).length < customCategories[id].max);
   }
 
-  const toggle = itemId => {
-    if (selected.includes(itemId)) onToggleItem(cat.id, selected.filter(id=>id!==itemId));
-    else if (!isFull) onToggleItem(cat.id, [...selected, itemId]);
+  const toggle = (group, itemId) => {
+    if (selected.includes(itemId)) {
+      onToggleItem(cat.id, selected.filter(id=>id!==itemId));
+    } else {
+      const groupCount = group.items.filter(it => selected.includes(it.id)).length;
+      if (groupCount < group.max && !isCatFull) {
+        onToggleItem(cat.id, [...selected, itemId]);
+      }
+    }
   };
+
+  const allTagsInSlide = new Set();
+  cat.groups.forEach(g => g.items.forEach(it => it.tags.forEach(t => allTagsInSlide.add(t))));
+  const showTags = Array.from(allTagsInSlide);
 
   return (
     <div className="slide custom-section-slide surface-paper" style={{
@@ -429,7 +440,7 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
       }}>
           <div className="custom-section-panel-header">
             <h2 className="custom-section-title">{t(cat.title,lang)}</h2>
-            <div className={`custom-section-counter ${isFull?'is-full':''}`}>
+            <div className={`custom-section-counter ${isCatFull?'is-full':''}`}>
               <span className="counter-num">{count}</span>
               <span className="counter-sep">/</span>
               <span className="counter-max">{cat.max}</span>
@@ -437,38 +448,99 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
             </div>
           </div>
 
-          {/* Items list — same style as set menu categories */}
-          <ul className="custom-section-list">
-            {cat.items.map(item => {
-              const sel=selected.includes(item.id), disabled=!sel&&isFull;
-              return (
-                <li key={item.id} className="cs-item-wrap">
-                  <button
-                    className={`custom-item-row ${sel?'is-selected':''} ${disabled?'is-disabled':''}`}
-                    onClick={()=>toggle(item.id)} disabled={disabled} aria-pressed={sel}>
-                    <span className={`custom-item-check ${sel?'is-checked':''}`}>
-                      {sel ? <i className="ti ti-check"/> : null}
-                    </span>
-                    <span className="custom-item-label-wrap" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-                        <span className="custom-item-label">{t(item.label,lang)}</span>
-                        <DietMarks tags={item.tags} size={14} />
-                      </span>
-                      {item.description && (
-                        <span style={{
-                          fontFamily: 'var(--sans)', fontWeight: 500, fontStyle: "italic",
-                          fontSize: "clamp(10px, 0.9vw, 12px)", color: "var(--buffet-ink-soft)",
-                          lineHeight: 1.3, textAlign: 'left', marginTop: 1
-                        }}>
-                          {t(item.description, lang)}
-                        </span>
-                      )}
-                    </span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+          {/* Groups list */}
+          {cat.groups.map(group => {
+            const groupCount = group.items.filter(it => selected.includes(it.id)).length;
+            const isGroupFull = groupCount >= group.max;
+            
+            return (
+              <div key={group.id} style={{ marginBottom: 24 }}>
+                {group.title && (
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+                    <h3 style={{ 
+                      fontFamily: "var(--display)", fontSize: "clamp(18px, 1.8vw, 22px)", 
+                      color: "var(--buffet-ink)", margin: 0, fontWeight: 400 
+                    }}>
+                      {t(group.title, lang)}
+                    </h3>
+                    <div style={{
+                      fontFamily: "var(--sans)", fontSize: "11px", fontWeight: 600,
+                      color: isGroupFull ? "var(--buffet-ink-soft)" : "var(--buffet-ink)",
+                      backgroundColor: isGroupFull ? "rgba(0,0,0,0.05)" : "transparent",
+                      border: isGroupFull ? "none" : "1px solid rgba(42,40,32,0.15)",
+                      padding: "2px 8px", borderRadius: 12, textTransform: "uppercase", letterSpacing: "0.05em"
+                    }}>
+                      {groupCount} / {group.max}
+                    </div>
+                  </div>
+                )}
+                <ul className="custom-section-list">
+                  {group.items.map(item => {
+                    const sel = selected.includes(item.id);
+                    const disabled = !sel && (isGroupFull || isCatFull);
+                    return (
+                      <li key={item.id} className="cs-item-wrap">
+                        <button
+                          className={`custom-item-row ${sel?'is-selected':''} ${disabled?'is-disabled':''}`}
+                          onClick={()=>toggle(group, item.id)} disabled={disabled} aria-pressed={sel}>
+                          <span className={`custom-item-check ${sel?'is-checked':''}`}>
+                            {sel ? <i className="ti ti-check"/> : null}
+                          </span>
+                          <span className="custom-item-label-wrap" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+                              <span className="custom-item-label">{t(item.label,lang)}</span>
+                              <DietMarks tags={item.tags} size={14} />
+                            </span>
+                            {item.description && (
+                              <span style={{
+                                fontFamily: 'var(--sans)', fontWeight: 500, fontStyle: "italic",
+                                fontSize: "clamp(10px, 0.9vw, 12px)", color: "var(--buffet-ink-soft)",
+                                lineHeight: 1.3, textAlign: 'left', marginTop: 1
+                              }}>
+                                {t(item.description, lang)}
+                              </span>
+                            )}
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
+
+          {/* Dynamic Diet Tags Glossary */}
+          {showTags.length > 0 && (
+            <div style={{
+              display: "flex", gap: "16px", flexWrap: "wrap",
+              marginTop: 8, marginBottom: 24, paddingTop: 16,
+              borderTop: "1px solid rgba(42,40,32,0.1)",
+              fontFamily: "var(--sans)", fontSize: "11px", color: "var(--buffet-ink-soft)",
+              textTransform: "uppercase", letterSpacing: "0.05em"
+            }}>
+              {showTags.includes("vegan") && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <DietMarks tags={["vegan"]} size={14} /> <span>{lang==='es'?'Vegano':'Vegan'}</span>
+                </div>
+              )}
+              {showTags.includes("vegetarian") && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <DietMarks tags={["vegetarian"]} size={14} /> <span>{lang==='es'?'Vegetariano':'Vegetarian'}</span>
+                </div>
+              )}
+              {showTags.includes("picante") && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <DietMarks tags={["picante"]} size={14} /> <span>{lang==='es'?'Picante':'Spicy'}</span>
+                </div>
+              )}
+              {showTags.includes("nueces") && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <DietMarks tags={["nueces"]} size={14} /> <span>{lang==='es'?'Contiene Nueces':'Contains Nuts'}</span>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Footer — back + next, always on the same row */}
           <div style={{
@@ -576,7 +648,7 @@ function CustomSummarySlide({ lang, clientName, selections }) {
           {CAT_ORDER.map((catId, gi, arr) => {
             const cat=customCategories[catId];
             const ids=selections[catId]||[];
-            const items=cat.items.filter(it=>ids.includes(it.id));
+            const items=cat.groups.flatMap(g => g.items).filter(it=>ids.includes(it.id));
             return (
               <div key={catId} style={{
                 paddingBottom: gi < arr.length-1 ? 12 : 0,
@@ -649,7 +721,7 @@ function CustomSummarySlide({ lang, clientName, selections }) {
             const cat = customCategories[catId];
             const ids = selections[catId]||[];
             if (!ids.length) return null;
-            const items = cat.items.filter(it=>ids.includes(it.id));
+            const items = cat.groups.flatMap(g => g.items).filter(it=>ids.includes(it.id));
             return (
               <div key={catId} className="print-category">
                 <div className="print-cat-title">{t(cat.title,lang)}</div>

@@ -151,7 +151,7 @@ export const DECK_CONTENT = {
         {id:"c5",label:{es:"Avena cremosa con frutos rojos",en:"Creamy oatmeal with berries"},tags:["vegetarian"]},
         {id:"c6",label:{es:"Ensalada de frutas exóticas",  en:"Exotic fruit salad"          },tags:["vegan","vegetarian","glutenFree"]},
         {id:"c7",label:{es:"Smoothie de plátano y fresa",  en:"Banana & strawberry smoothie"},tags:["vegetarian","glutenFree"]},
-        {id:"c8",label:{es:"Agua fresca de jamaica",       en:"Hibiscus agua fresca"        },tags:["vegan","vegetarian","glutenFree"]},
+        {id:"c8",label:{es:"Agua fresca de jamaica",       en:"Hibiscus water"        },tags:["vegan","vegetarian","glutenFree"]},
       ],
     },
     "dulce": {

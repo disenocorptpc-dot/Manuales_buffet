@@ -485,7 +485,7 @@ function CustomSectionSlide({ slide, lang, selections, onToggleItem,
             </div>
           </div>
 
-          <div style={{ flex: 1, overflowY: "auto", paddingRight: "clamp(28px,3vw,52px)", paddingBottom: 16 }}>
+          <div className="hide-scrollbar" style={{ flex: 1, overflowY: "auto", paddingRight: "clamp(28px,3vw,52px)", paddingBottom: 16 }}>
           {/* Groups list */}
           {cat.groups.map(group => {
             const groupCount = group.items.filter(it => selected.includes(it.id)).length;
@@ -797,7 +797,7 @@ function CustomSummarySlide({ lang, clientName, selections }) {
                         borderTop: groupIdx > 0 ? "1px dashed rgba(42,40,32,0.15)" : "none"
                       }}>
                         {group.title && <div className="print-group-title" style={{ fontSize: "8px", fontWeight: 700, color: "var(--buffet-ink-soft)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>{t(group.title, lang)}</div>}
-                        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px' }}>
+                        <div style={['jugos', 'fruta', 'pan'].includes(group.id) ? { display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px' } : { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', width: '100%' }}>
                           {groupItems.map(it => (
                             <div key={it.id} className="print-item">
                               <span className="print-item-label">{t(it.label,lang)}</span>

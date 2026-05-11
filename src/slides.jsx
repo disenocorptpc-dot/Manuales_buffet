@@ -492,40 +492,15 @@ function CustomSummarySlide({ lang, clientName, selections }) {
   const firstCatWithSelection = CAT_ORDER.find(id => (selections[id]||[]).length > 0);
   const heroUrl = customCategories[firstCatWithSelection || 'comienzo'].hero;
 
-  const handleDownloadPDF = async () => {
-    // Dynamically import to keep bundle small
-    const html2canvas = (await import('html2canvas')).default;
-    const { jsPDF } = await import('jspdf');
-
-    const el = document.getElementById('custom-summary-capture');
-    if (!el) return;
-
-    const grain = el.querySelector('.grain');
-    if (grain) grain.style.display = 'none';
+  const handleDownloadPDF = () => {
+    const dateStr = new Date().toLocaleDateString('es-MX').replace(/\//g, '-');
+    const safeName = (clientName || 'Menu').replace(/[^a-z0-9]/gi, '_');
+    const originalTitle = document.title;
+    document.title = `Menu_${safeName}_${dateStr}`;
     
-    const btn = document.getElementById('pdf-download-btn');
-    if (btn) btn.style.display = 'none';
-
-    try {
-      const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false });
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
-      
-      const pdf = new jsPDF({
-        orientation: 'landscape',
-        unit: 'px',
-        format: [canvas.width, canvas.height]
-      });
-      pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
-      
-      const dateStr = new Date().toLocaleDateString('es-MX').replace(/\//g, '-');
-      const safeName = (clientName || 'Menu').replace(/[^a-z0-9]/gi, '_');
-      pdf.save(`Menu_${safeName}_${dateStr}.pdf`);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      if (grain) grain.style.display = '';
-      if (btn) btn.style.display = '';
-    }
+    window.print();
+    
+    setTimeout(() => { document.title = originalTitle; }, 1000);
   };
 
   const currentDateStr = new Date().toLocaleDateString(lang==='es'?'es-MX':'en-US', {
@@ -533,7 +508,8 @@ function CustomSummarySlide({ lang, clientName, selections }) {
   });
 
   return (
-    <div id="custom-summary-capture" className="slide" style={{
+    <>
+    <div id="custom-summary-capture" className="slide no-print" style={{
       backgroundColor: C.paper,
       backgroundImage: "url(_recursos/imagenes/05_Fondo_beige_menu.jpg)",
       backgroundSize: "cover", backgroundPosition: "center"
@@ -642,6 +618,44 @@ function CustomSummarySlide({ lang, clientName, selections }) {
         </button>
       </div>
     </div>
+
+    {/* NATIVE PRINT LAYOUT (Visible only during printing via @media print) */}
+    <div className="print-only">
+      <div className="print-page">
+        <div className="print-hero-container">
+          <div className="print-hero-circle" style={{ backgroundImage: `url(${heroUrl})` }} />
+        </div>
+        
+        <div className="print-header">
+          <div className="print-subtitle">{lang==='es'?'Menú Personalizado':'Customized Menu'}</div>
+          <div className="print-title">{clientName||'—'}</div>
+          <div className="print-date">{currentDateStr}</div>
+        </div>
+        
+        <div className="print-categories">
+          {CAT_ORDER.map((catId) => {
+            const cat = customCategories[catId];
+            const ids = selections[catId]||[];
+            if (!ids.length) return null;
+            const items = cat.items.filter(it=>ids.includes(it.id));
+            return (
+              <div key={catId} className="print-category">
+                <div className="print-cat-title">{t(cat.title,lang)}</div>
+                <div className="print-cat-items">
+                  {items.map(it => (
+                    <div key={it.id} className="print-item">
+                       <span className="print-item-label">{t(it.label,lang)}</span>
+                       <DietMarks tags={it.tags} size={10}/>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+    </>
   );
 }
 
